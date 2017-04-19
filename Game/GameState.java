@@ -1,0 +1,221 @@
+package Game;
+import Dungeon.*;
+import Entities.Player;
+import Items.*;
+import Events.*;
+import Timers.*;
+import Commands.*;
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
+public class GameState {
+
+    public static class IllegalSaveFormatException extends Exception {
+        public IllegalSaveFormatException(String e) {
+            super(e);
+        }
+    }
+
+    static String DEFAULT_SAVE_FILE = "zork_save";
+    public static String SAVE_FILE_EXTENSION = ".sav";
+    static String SAVE_FILE_VERSION = "Zork v2.0 save data";
+
+    static String ADVENTURER_MARKER = "Adventurer:";
+    static String CURRENT_ROOM_LEADER = "Current room: ";
+    static String INVENTORY_LEADER = "Inventory: ";
+    static String HEALTH_LEADER = "Health: ";
+    static String SCORE_LEADER = "Score: ";
+
+    private static GameState theInstance;
+    private Dungeon dungeon;
+    private Room adventurersCurrentRoom;
+    private static boolean isLightOut = true;
+    
+    private static int adventurerScore = 0;
+    private static Player player;
+    
+
+    public static synchronized GameState instance() {
+        if (theInstance == null) {
+            theInstance = new GameState();
+          
+        }
+        return theInstance;
+    }
+
+    private GameState() {
+        
+    }
+
+    void restore(String filename) throws FileNotFoundException,
+        IllegalSaveFormatException, Dungeon.IllegalDungeonFormatException {
+
+        Scanner s = new Scanner(new FileReader(filename));
+
+        if (!s.nextLine().equals(SAVE_FILE_VERSION)) {
+            throw new IllegalSaveFormatException("Save file not compatible.");
+        }
+
+        String dungeonFileLine = s.nextLine();
+
+        if (!dungeonFileLine.startsWith(Dungeon.FILENAME_LEADER)) {
+            throw new IllegalSaveFormatException("No '" +
+                Dungeon.FILENAME_LEADER + 
+                "' after version indicator.");
+        }
+
+        dungeon = new Dungeon(dungeonFileLine.substring(
+            Dungeon.FILENAME_LEADER.length()), false);
+        dungeon.restoreState(s);
+
+        s.nextLine();  // Throw away "Adventurer:".
+        String currentRoomLine = s.nextLine();
+        adventurersCurrentRoom = dungeon.getRoom(
+            currentRoomLine.substring(CURRENT_ROOM_LEADER.length()));
+        while (s.hasNext()) {
+            String next = s.nextLine();
+            if(next.contains(INVENTORY_LEADER)){
+                String inventoryList = next.substring(
+                    INVENTORY_LEADER.length());
+                String[] inventoryItems = inventoryList.split(",");
+                for (String itemName : inventoryItems) {
+                    try {
+                        player.addToInventory(dungeon.getItem(itemName));
+                    } catch (Item.NoItemException e) {
+                        throw new IllegalSaveFormatException("No such item '" +
+                            itemName + "'");
+                    }
+                }
+            }
+            else if(next.contains(HEALTH_LEADER)){
+                    String[] sep = next.split(":");
+                    this.player.setHealth((Integer.parseInt(sep[1].replace(" ", ""))));
+
+            }
+            else if(next.contains(SCORE_LEADER)){
+                    String[] sep = next.split(":");
+                    this.setScore(Integer.parseInt(sep[1].replace(" ", "")));
+            }
+        }
+    }
+    
+
+    void store() throws IOException {
+        store(DEFAULT_SAVE_FILE);
+    }
+
+    public void store(String saveName) throws IOException {
+        String filename = saveName + SAVE_FILE_EXTENSION;
+        PrintWriter w = new PrintWriter(new FileWriter(filename));
+        w.println(SAVE_FILE_VERSION);
+        dungeon.storeState(w);
+        w.println(ADVENTURER_MARKER);
+        w.println(CURRENT_ROOM_LEADER + adventurersCurrentRoom.getTitle());
+        if (player.getInventory().size() > 0) {
+            w.print(INVENTORY_LEADER);
+            for (int i=0; i<player.getInventory().size()-1; i++) {
+                w.print(player.getInventory().get(i).getPrimaryName() + ",");
+            }
+            w.println(player.getInventory().get(player.getInventory().size()-1).getPrimaryName());
+        }
+        
+        w.print(HEALTH_LEADER);
+        w.print(GameState.instance().player.getHealth());
+        w.println();
+        w.print(SCORE_LEADER);
+        w.print(GameState.instance().getScore());
+        
+        w.close();
+    }
+
+    void initialize(Dungeon dungeon) {
+        this.dungeon = dungeon;
+        adventurersCurrentRoom = dungeon.getEntry();
+        System.out.println(adventurersCurrentRoom.getTitle());
+    }
+
+    public ArrayList<String> getInventoryNames() {
+        ArrayList<String> names = new ArrayList<String>();
+        for (Item item : player.getInventory()) {
+            names.add(item.getPrimaryName());
+        }
+        return names;
+    }
+
+    
+    
+    public Item getItemInVicinityNamed(String name) throws Item.NoItemException {
+
+        // First, check inventory.
+        for (Item item : player.getInventory()) {
+            if (item.goesBy(name)) {
+                return item;
+            }
+        }
+
+        // Next, check room contents.
+        for (Item item : adventurersCurrentRoom.getContents()) {
+            if (item.goesBy(name)) {
+                return item;
+            }
+        }
+
+        throw new Item.NoItemException();
+    }
+
+    public Item getItemFromInventoryNamed(String name) throws Item.NoItemException {
+
+        for (Item item : player.getInventory()) {
+            if (item.toString().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        throw new Item.NoItemException();
+    }
+
+    public Room getAdventurersCurrentRoom() {
+        return adventurersCurrentRoom;
+    }
+
+    public void setAdventurersCurrentRoom(Room room) {
+        adventurersCurrentRoom = room;
+    }
+
+    public Dungeon getDungeon() {
+        return dungeon;
+    }
+    
+    public void setScore(int x){
+    	this.adventurerScore = x;
+    }
+    public int getScore(){
+    	return this.adventurerScore;
+    }
+    
+    public void addScore(int s){
+    	this.adventurerScore += s;
+    }
+    
+    public void reduceScore(int s){
+    	this.adventurerScore -= s;
+    }
+    
+    public void setLight(boolean x){
+    	this.isLightOut = x;
+    }
+    
+    public Player getPlayer(){
+    	return this.player;
+    }
+    
+    public void initPlayer(String playerName){
+    	this.player = new Player(150, playerName);
+    }
+
+}
