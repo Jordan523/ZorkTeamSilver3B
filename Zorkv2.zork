@@ -48,7 +48,7 @@ donut
 eat[Disappear,Wound(-2)]:You feel mildly guilt-ridden.
 stomp:The donut is now smooshed.
 ---
-Ancient Sword
+AncientSword
 weapon:15,30
 25
 examine:There are engravings in some ancient laguage.
@@ -61,6 +61,7 @@ examine:A small weapon used for close quarter fights, mostly hit and run encount
 ===
 Rooms:
 Rotunda
+Contents: donut
 You are in a beautiful round entry chamber, with tall white pillars that
 seemingly reach to the skies. There is an elevator here.
 ---
