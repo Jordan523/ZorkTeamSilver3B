@@ -24,7 +24,7 @@ public class Item {
         Dungeon.IllegalDungeonFormatException {
 
         messages = new Hashtable<String,String>();
-        
+        Dungeon dn = GameState.instance().getDungeon();
 
         // Read item name.
         primaryName = s.nextLine();
@@ -84,6 +84,8 @@ public class Item {
                     	this.events.put(new AddScore(Integer.parseInt(evParam)), verb);
                     else if (evName.equalsIgnoreCase("Transform"))
                     	this.events.put(new TransformEvent(evParam, this), verb);
+                    //else if (evName.equalsIgnoreCase("Unlock"))
+                    	//this.events.put(new Unlock(dn.getRoom(evLine), ), verb);
                     else if (evName.equalsIgnoreCase("Wound"))
                     	this.events.put(new Wound(Integer.parseInt(evParam)), verb);
                 }

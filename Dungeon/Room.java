@@ -217,7 +217,7 @@ public class Room {
      * Removes an Exit from the Room's blocked ArrayList and adds it to exits.
      * @param exit 
      */
-    void unblockExit(Exit exit) {
+    public void unblockExit(Exit exit) {
         if (this.blockedExits.contains(exit)) {
             this.blockedExits.remove(exit);
             this.exits.add(exit);
@@ -227,7 +227,7 @@ public class Room {
      * Adds a blocked exit to the room, removing it from exits ArrayList if needed
      * @param exit 
      */
-    void blockExit(Exit exit) {
+    public void blockExit(Exit exit) {
         if (this.exits.contains(exit)) {
             this.exits.remove(exit);
         }
@@ -251,8 +251,8 @@ public class Room {
         throw new Item.NoItemException();
     }
     /**
-     * this method will add a container object to the room
-     * @param container
+     * this method will add a weapon object to the room
+     * @param weapon
      */
     public void addWeapon(Weapon weapon)
     {
