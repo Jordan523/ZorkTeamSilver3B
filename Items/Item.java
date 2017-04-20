@@ -2,6 +2,7 @@ package Items;
 import Dungeon.*;
 import Game.*;
 import Events.*;
+import java.awt.Event;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +17,7 @@ public class Item {
 
     private String primaryName;
     private int weight;
-    private Hashtable<String,String> messages;
+    private Hashtable<String,String> messages = new Hashtable<>();
     private Hashtable<Events, String> events = new Hashtable<>();
    
 
@@ -86,6 +87,10 @@ public class Item {
                     	this.events.put(new TransformEvent(evParam, this), verb);
                     else if (evName.equalsIgnoreCase("Wound"))
                     	this.events.put(new Wound(Integer.parseInt(evParam)), verb);
+                    else if(evName.equalsIgnoreCase("Win"))
+                        this.events.put(new Win(), verb);
+                    else if(evName.equalsIgnoreCase("Heal"))
+                        this.events.put(new HealEvent(Integer.valueOf(evParam)), verb);
                 }
             } else {
                 verb = verbParts[0];
@@ -95,26 +100,80 @@ public class Item {
             verbLine = s.nextLine();
         }
     }
-
+    
+    /**
+     * 
+     * @param item item to create
+     * This is used for creating items in rooms that were not initialized in the dungeon file. However, this still can only use items that are 
+     * created in the dungeon file.
+     */
+    public Item(Item item){
+       
+        this.events = item.itemEvents();
+        this.messages = item.messages;
+        this.primaryName = item.getPrimaryName();
+        this.weight = item.getWeight();
+        
+    }
+    
+    /**
+     * \
+     * @param name item name
+     * @return
+     * If this item goes by the given name then return true
+     */
     public boolean goesBy(String name) {
         // could have other aliases
         return this.primaryName.equalsIgnoreCase(name);
     }
 
+    /**
+     * 
+     * @return
+     * return item name
+     */
     public String getPrimaryName() { return primaryName; }
-
+    
+    /**
+     * 
+     * @param verb verb for message
+     * @return
+     * Return the message for the corresponding verb
+     */
     public String getMessageForVerb(String verb) {
         return messages.get(verb);
     }
 
+    /**
+     * Returns primary name
+     */
     public String toString() {
         return primaryName;
     }
     
+    /**
+     * 
+     * @return
+     * Returns items weight. This is used for calculating the carrying weight for the player's inventory.
+     */
+    public int getWeight(){
+        return this.weight;
+    }
+    
+    /**
+     * 
+     * @return
+     * Returns the Hashtable of all the given items events.
+     */
     public Hashtable<Events, String> itemEvents(){
         return this.events;
     }
     
+    /**
+     * 
+     * @return
+     * Returns the damage of the items attack event. If no attack event exists then it will return 0.
+     */
     public int getDamage(){
     	Set<Events> keys = this.events.keySet();
     	AttackEvent temp;
@@ -127,6 +186,11 @@ public class Item {
     	return 0;
     }
     
+    /**
+     * 
+     * @return
+     * Will return max damage of the attack event or 0 if no attack event exists.
+     */
     public int getMaxDamage(){
     	
     	Set<Events> keys = this.events.keySet();
@@ -140,6 +204,11 @@ public class Item {
     	return 0;
     }
     
+    /**
+     * 
+     * @return
+     * Will return minimum damage of attack event or 0 if none exists.
+     */
     public int getMinDamage(){
     	
     	Set<Events> keys = this.events.keySet();
@@ -152,5 +221,14 @@ public class Item {
     	}
     	return 0;
     	
+    }
+    
+    /**
+     * 
+     * @return
+     * Return the chance of a successful hit for this item.
+     */
+    public int getHitChance(){
+        return 90;
     }
 }
