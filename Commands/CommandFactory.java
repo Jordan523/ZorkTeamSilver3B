@@ -31,6 +31,9 @@ public class CommandFactory {
         if (verb.equalsIgnoreCase("take")) {
             return new TakeCommand(noun);
         }
+        if (verb.equalsIgnoreCase("equip"))
+        	return new EquipCommand(noun);
+        
         if (verb.equalsIgnoreCase("drop")) {
             return new DropCommand(noun);
         }

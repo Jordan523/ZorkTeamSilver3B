@@ -11,7 +11,7 @@ public class Player extends Entity{
 
 	
 	Random rand = new Random();
-	private Weapon weilding;
+	private Item weilding;
 	private Item holding;
 	private ArrayList<Item> inventory;
     private ArrayList<Weapon> weapons;
@@ -34,7 +34,7 @@ public class Player extends Entity{
 			return;
 		}
 		
-		int hitChance = weilding.getHitChance();
+		int hitChance = weilding.getDamage();
 		
 		if(rand.nextInt(100) + 1 < 80){
 			
@@ -73,7 +73,7 @@ public class Player extends Entity{
 			break;
 		case 2:
 			damageDone = e.getDamage();
-			System.out.println(e.getName() + " damaged you with it's " + e.getWeapon().getName() +"!");
+			System.out.println(e.getName() + " damaged you with it's " + e.getWeapon().getPrimaryName() +"!");
 			this.reduceHealth(damageDone);
 			break;
 		}
@@ -140,8 +140,8 @@ public class Player extends Entity{
 		
 	}
 	
-	public void equip(Weapon w){
-		this.weilding = w;
+	public void equip(Item item){
+		this.weilding = item;
 	}
 	
 	public String getName(){
@@ -163,14 +163,6 @@ public class Player extends Entity{
 
     public void removeFromInventory(Item item) {
         inventory.remove(item);
-    }
-
-    public void addToInventory(Weapon weapon) /* throws TooHeavyException */ {
-        weapons.add(weapon);
-    }
-
-    public void removeFromInventory(Weapon weapon) {
-        weapons.remove(weapon);
     }
     
     public ArrayList<Item> getInventory(){

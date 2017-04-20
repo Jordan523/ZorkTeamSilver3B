@@ -12,8 +12,6 @@ import java.util.Scanner;
 
 import Entities.Enemy;
 import Entities.Enemy.NoEnemyException;
-import Entities.Goblin;
-import Entities.Troll;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;

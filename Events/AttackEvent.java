@@ -63,5 +63,11 @@ public class AttackEvent implements Events{
         return minDmg;
 	}
 	
-
+	public int getMaxDamage(){
+		return this.maxDmg;
+	}
+	
+	public int getMinDamage(){
+		return this.minDmg;
+	}
 }

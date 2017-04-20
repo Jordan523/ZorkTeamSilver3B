@@ -52,11 +52,13 @@ public class Room {
         init();
         title = s.nextLine();
         desc = "";
+        System.out.println(title);
         if (title.equals(Dungeon.TOP_LEVEL_DELIM)) {
             throw new NoRoomException();
         }
         
         String lineOfDesc = s.nextLine();
+        System.out.println(lineOfDesc);
         while (!lineOfDesc.equals(Dungeon.SECOND_LEVEL_DELIM) &&
                !lineOfDesc.equals(Dungeon.TOP_LEVEL_DELIM)) {
 
@@ -66,6 +68,7 @@ public class Room {
                 for (String itemName : itemNames) {
                     try {
                         if (initState) {
+                        	System.out.println(itemName);
                             add(d.getItem(itemName));
                         }
                     } catch (Item.NoItemException e) {
@@ -74,6 +77,7 @@ public class Room {
                     }
                 }
             } else {
+            	System.out.println(lineOfDesc);
                 desc += lineOfDesc + "\n";
             }
             lineOfDesc = s.nextLine();
@@ -217,7 +221,7 @@ public class Room {
      * Removes an Exit from the Room's blocked ArrayList and adds it to exits.
      * @param exit 
      */
-    public void unblockExit(Exit exit) {
+    void unblockExit(Exit exit) {
         if (this.blockedExits.contains(exit)) {
             this.blockedExits.remove(exit);
             this.exits.add(exit);
@@ -227,7 +231,7 @@ public class Room {
      * Adds a blocked exit to the room, removing it from exits ArrayList if needed
      * @param exit 
      */
-    public void blockExit(Exit exit) {
+    void blockExit(Exit exit) {
         if (this.exits.contains(exit)) {
             this.exits.remove(exit);
         }
@@ -251,8 +255,8 @@ public class Room {
         throw new Item.NoItemException();
     }
     /**
-     * this method will add a weapon object to the room
-     * @param weapon
+     * this method will add a container object to the room
+     * @param container
      */
     public void addWeapon(Weapon weapon)
     {

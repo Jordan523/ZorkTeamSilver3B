@@ -24,7 +24,7 @@ public class Item {
         Dungeon.IllegalDungeonFormatException {
 
         messages = new Hashtable<String,String>();
-        Dungeon dn = GameState.instance().getDungeon();
+        
 
         // Read item name.
         primaryName = s.nextLine();
@@ -84,8 +84,6 @@ public class Item {
                     	this.events.put(new AddScore(Integer.parseInt(evParam)), verb);
                     else if (evName.equalsIgnoreCase("Transform"))
                     	this.events.put(new TransformEvent(evParam, this), verb);
-                    //else if (evName.equalsIgnoreCase("Unlock"))
-                    	//this.events.put(new Unlock(dn.getRoom(evLine), ), verb);
                     else if (evName.equalsIgnoreCase("Wound"))
                     	this.events.put(new Wound(Integer.parseInt(evParam)), verb);
                 }
@@ -127,5 +125,32 @@ public class Item {
     		}
     	}
     	return 0;
+    }
+    
+    public int getMaxDamage(){
+    	
+    	Set<Events> keys = this.events.keySet();
+    	AttackEvent temp;
+    	for(Events e : keys){
+    		if(e.getType().equalsIgnoreCase("AttackEvent")){
+    			temp = (AttackEvent)e;
+    			return temp.getMaxDamage();
+    		}
+    	}
+    	return 0;
+    }
+    
+    public int getMinDamage(){
+    	
+    	Set<Events> keys = this.events.keySet();
+    	AttackEvent temp;
+    	for(Events e : keys){
+    		if(e.getType().equalsIgnoreCase("AttackEvent")){
+    			temp = (AttackEvent)e;
+    			return temp.getMinDamage();
+    		}
+    	}
+    	return 0;
+    	
     }
 }
