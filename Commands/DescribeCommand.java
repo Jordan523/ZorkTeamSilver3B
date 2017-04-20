@@ -15,7 +15,7 @@ public class DescribeCommand extends Command{
 
     @Override
     public String execute() {
-        return GameState.instance().getAdventurersCurrentRoom().fullDescribe();
+        return GameState.instance().getPlayer().getAdventurersCurrentRoom().fullDescribe();
     }
     
 }

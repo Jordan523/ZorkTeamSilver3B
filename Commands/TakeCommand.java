@@ -1,13 +1,15 @@
 package Commands;
 import Items.*;
-import Items.Weapon.NoWeaponException;
 import Dungeon.Room;
+import Entities.Player;
+import Entities.Player.TooHeavyException;
 import Game.*;
  
 
 class TakeCommand extends Command {
 
     private String itemName;
+    private Player player = GameState.instance().getPlayer();
 
     TakeCommand(String itemName) {
         this.itemName = itemName;
@@ -19,7 +21,7 @@ class TakeCommand extends Command {
         }
         try {
             Room currentRoom = 
-                GameState.instance().getAdventurersCurrentRoom();
+                GameState.instance().getPlayer().getAdventurersCurrentRoom();
             Item theItem = currentRoom.getItemNamed(itemName);
             GameState.instance().getPlayer().addToInventory(theItem);
             currentRoom.remove(theItem);
@@ -29,15 +31,17 @@ class TakeCommand extends Command {
             // Check and see if we have this already. If no exception is
             // thrown from the line below, then we do.
             try {
-                GameState.instance().getItemFromInventoryNamed(itemName);
+                player.getItemFromInventoryNamed(itemName);
                 return "You already have the " + itemName + ".\n";
             } catch (Item.NoItemException e2) {
                 
             }
+        } catch(TooHeavyException e){
+            return "You are carrying too much weight.\n";
         }
-        try{
+        /**try{
         	Room currentRoom = 
-        			GameState.instance().getAdventurersCurrentRoom();
+        			player.getAdventurersCurrentRoom();
         	Weapon weapon = currentRoom.getWeaponNamed(itemName);
         	if(weapon == null){
         		return "There's no " + itemName + " here.\n";
@@ -45,8 +49,8 @@ class TakeCommand extends Command {
         	
         }catch(NoWeaponException e){
         	
-        }
+        }*/
         
-        return null;
+        return "There's no " + itemName + " here.\n";
     }
 }

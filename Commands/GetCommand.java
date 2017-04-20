@@ -16,7 +16,7 @@ public class GetCommand extends Command{
 			return "Your current health is " + GameState.instance().getPlayer().getHealth()+"\n";
 		}
 		else if(whatToGet.equalsIgnoreCase("score")){
-			return "Your current score is " + GameState.instance().getScore()+"\n";
+			return "Your current score is " + GameState.instance().getPlayer().getScore()+"\n";
 		}
 		else
 			return "I dont know what " + whatToGet + " is.\n";

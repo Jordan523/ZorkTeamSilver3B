@@ -1,13 +1,15 @@
 package Commands;
+import Entities.Player;
 import Game.GameState;
 import Items.*;
  
 
-class DropCommand extends Command {
+public class DropCommand extends Command {
 
     private String itemName;
+    private Player player = GameState.instance().getPlayer();
 
-    DropCommand(String itemName) {
+    public DropCommand(String itemName) {
         this.itemName = itemName;
     }
 
@@ -16,10 +18,16 @@ class DropCommand extends Command {
             return "Drop what?\n";
         }
         try {
-            Item theItem = GameState.instance().getItemFromInventoryNamed(
+            Item theItem = player.getItemFromInventoryNamed(
                 itemName);
-            GameState.instance().getPlayer().removeFromInventory(theItem);
-            GameState.instance().getAdventurersCurrentRoom().add(theItem);
+            player.removeFromInventory(theItem);
+            Item weilding = player.getWielding();
+            if(weilding != null){
+                if(weilding.equals(theItem))
+                    player.equip(null);
+            }
+                
+            player.getAdventurersCurrentRoom().add(theItem);
             return itemName + " dropped.\n";
         } catch (Item.NoItemException e) {
             return "You don't have a " + itemName + ".\n";

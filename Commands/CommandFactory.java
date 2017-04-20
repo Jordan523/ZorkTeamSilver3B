@@ -28,10 +28,10 @@ public class CommandFactory {
         if (verb.equalsIgnoreCase("save")) {
             return new SaveCommand(noun);
         }
-        if (verb.equalsIgnoreCase("take")) {
+        if (verb.equalsIgnoreCase("take") || verb.equalsIgnoreCase("grab")) {
             return new TakeCommand(noun);
         }
-        if (verb.equalsIgnoreCase("equip"))
+        if (verb.equalsIgnoreCase("equip") || verb.equalsIgnoreCase("hold"))
         	return new EquipCommand(noun);
         
         if (verb.equalsIgnoreCase("drop")) {
@@ -39,6 +39,11 @@ public class CommandFactory {
         }
         if(verb.equalsIgnoreCase("get")){
             return new GetCommand(noun);
+        }
+        //if(verb.equalsIgnoreCase("use"))
+            //return new UseCommand(noun);
+        if(verb.equalsIgnoreCase("attack")){
+            return new AttackCommand(noun);
         }
         if (verb.equalsIgnoreCase("describe") || verb.equalsIgnoreCase("desc")){
             return new DescribeCommand();

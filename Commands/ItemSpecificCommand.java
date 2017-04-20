@@ -9,11 +9,12 @@ import java.util.*;
  * @author jordan.smith
  * This class will execute commands specific to items
  */
-class ItemSpecificCommand extends Command {
+public class ItemSpecificCommand extends Command {
 
     private String verb;
     private String noun;
     private ArrayList<Events> events;
+    private boolean eventMessagePrinted = false;
                         
 /**
  * 
@@ -55,11 +56,28 @@ class ItemSpecificCommand extends Command {
             
         }
         
+        
         //Execute all events associated with this command
         for (Events e : events) {
+        	String type = e.getType();
+            //if(type != null && !type.equalsIgnoreCase("WinEvent"))
             e.execute();
+            //else 
+              //  new Win(this).execute();
         }
         
-        return (msg == null ? "Sorry, you can't " + verb + " the " + noun + "." : msg) + "\n";
+        if(!eventMessagePrinted)
+            return (msg == null ? "Sorry, you can't " + verb + " the " + noun + "." : msg) + "\n";
+        else
+            return "";
+    }
+    
+    /**
+     * 
+     * @param x set eventMessagepPrinted to given boolean
+     * This method is used when checking if any enemies are around when the win event is called.
+     */
+    public void setEventMessagePrinted(boolean x){
+        this.eventMessagePrinted = x;
     }
 }

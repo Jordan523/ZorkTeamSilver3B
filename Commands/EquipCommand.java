@@ -20,15 +20,16 @@ public class EquipCommand extends Command{
 		try{
 			
 			Item item = GameState.instance().getItemInVicinityNamed(itemToEquip);
+                        new TakeCommand(itemToEquip).execute();
 			GameState.instance().getPlayer().equip(item);
 			
 		}catch(NoItemException e){
 			
-			return "There is no " + itemToEquip + " to equip.";
+			return "There is no " + itemToEquip + " to equip.\n";
 		}
 		
 		
-		return itemToEquip + " equiped.";
+		return itemToEquip + " equiped.\n";
 	}
 	
 	
