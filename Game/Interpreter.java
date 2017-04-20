@@ -7,7 +7,12 @@ import Entities.*;
 import java.util.Random;
 import java.util.Scanner;
 
-
+/**
+ * 
+ * @author ZorkTeamSilver
+ * This is the main of the program. User input is taken in here and executed.
+ *
+ */
 public class Interpreter {
 
     private static GameState state; // not strictly necessary; GameState is 
@@ -49,7 +54,7 @@ public class Interpreter {
             }
 
             System.out.print("\n" + 
-                state.getAdventurersCurrentRoom().describe() + "\n");
+                state.getPlayer().getAdventurersCurrentRoom().describe() + "\n");
 
             command = promptUser(commandLine);
 
@@ -63,18 +68,15 @@ public class Interpreter {
                 System.out.print(
                            CommandFactory.instance().parse(command).execute());
                           
-                if(x<2){
-                          System.out.println(new teleport().execute());
-                          }
                  if(GameState.instance().getPlayer().getHealth() < 1){
                     System.out.println("You Died!");
                     System.exit(0);
                 }
                 
+                
                 GameState.instance().getDungeon().updateDungeon();
-                
-                
                 command = promptUser(commandLine);
+                
                 
                
             }
