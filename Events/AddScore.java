@@ -1,5 +1,6 @@
 package Events;
 import Game.*;
+import Entities.Player;
 
 /*
 
@@ -15,6 +16,7 @@ import Game.*;
 public class AddScore implements Events{
 
     private int value;
+    //private Player player = GameState.instance().getPlayer();
     
     public AddScore(int value){
         
@@ -24,14 +26,14 @@ public class AddScore implements Events{
         
         if(value > 1){
             System.out.println("You gained " + value + " points!");
-            GameState.instance().addScore(value);
+            GameState.instance().getPlayer().addScore(value);
         }
         else if(value < 0){
             System.out.println("You lost " + value + " points!");
         }
         else if(value == 1){
             System.out.println("You earned a point for your score!");
-            GameState.instance().addScore(value);
+            GameState.instance().getPlayer().addScore(value);
         }
     }
 
