@@ -7,6 +7,7 @@ Bomb
 examine:The bomb is a heavy, glistening black sphere. On the top appears to be some form of detonator.
 kick[Wound(2)]:Ouch! That hurt your foot.
 detonate[Die]:An ear-splitting halo of shrapnel kills you and seriously degrades the room's interior.
+ignite[DeadTimer(5),Transform(ashPile)]:Tsssss......
 ---
 DrPepper
 10
@@ -25,6 +26,10 @@ squishedCan
 throw:Zing!
 stomp:Further stomping seems to have no effect.
 recycle[Score(5),Disappear]:Boo-ya, helped save the environment.
+---
+ashPile
+1
+examine:A pile of ash.
 ---
 magicWand
 5
@@ -58,10 +63,14 @@ weapon:10,15
 10
 examine:A small weapon used for close quarter fights, mostly hit and run encounters.
 ---
+Potion
+5
+use[Disappear,Heal(20)]:Used the Potion.
+---
 ===
 Rooms:
 Rotunda
-Contents: donut
+Contents: AncientSword,Bomb
 You are in a beautiful round entry chamber, with tall white pillars that
 seemingly reach to the skies. There is an elevator here.
 ---
@@ -134,11 +143,11 @@ Basement hallway
 ---
 ===
 Enemies:
-Troll
+Troll:100
 Weapon:Dagger
 Room:Basement hallway
 ---
-Goblin
+Goblin:80
 Weapon:Dagger
 Room:Stephen's office
 ---
