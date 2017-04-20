@@ -1,6 +1,9 @@
 package Events;
+import Entities.Player;
 import Game.GameState;
 import Items.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Nathan
@@ -8,6 +11,7 @@ import Items.*;
 public class TransformEvent implements Events {
     private String itemName;
     private Item orig;
+    private Player player = GameState.instance().getPlayer();
     
     public TransformEvent(String itemName, Item orig) {
         this.itemName = itemName;
@@ -24,12 +28,13 @@ public class TransformEvent implements Events {
         try {
             newItem = GameState.instance().getDungeon().getItem(itemName);
             
-            if (gs.getItemFromInventoryNamed(orig.getPrimaryName()) != null) {
-                gs.getPlayer().removeFromInventory(orig);
-                gs.getPlayer().addToInventory(newItem);
+            if (player.getItemFromInventoryNamed(orig.getPrimaryName()) != null) {
+                player.removeFromInventory(orig);
+                player.addToInventory(newItem);
             }
         } catch (Item.NoItemException ex) {
             found = false;
+        } catch (Player.TooHeavyException ex) {
         }
         
         // If it's not in the inventory, then check the room
@@ -37,9 +42,9 @@ public class TransformEvent implements Events {
             try {
                 newItem = GameState.instance().getDungeon().getItem(itemName);
                 
-                if (gs.getAdventurersCurrentRoom().getItemNamed(orig.getPrimaryName()) != null) {
-                    gs.getAdventurersCurrentRoom().remove(orig);
-                    gs.getAdventurersCurrentRoom().add(newItem);
+                if (player.getAdventurersCurrentRoom().getItemNamed(orig.getPrimaryName()) != null) {
+                    player.getAdventurersCurrentRoom().remove(orig);
+                    player.getAdventurersCurrentRoom().add(newItem);
                 }
             } catch (Item.NoItemException ex) {
                 

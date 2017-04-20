@@ -23,8 +23,8 @@ public class teleport {
         Random rand = new Random();
         room = GameState.instance().getDungeon().getHash();
         ran = rand.nextInt(room.length);
-        GameState.instance().setAdventurersCurrentRoom(GameState.instance().getDungeon().getRoom(room[ran]));
-        return ("You've been teleported to " +GameState.instance().getAdventurersCurrentRoom().describe());
+        GameState.instance().getPlayer().setAdventurersCurrentRoom(GameState.instance().getDungeon().getRoom(room[ran]));
+        return ("You've been teleported to " +GameState.instance().getPlayer().getAdventurersCurrentRoom().describe());
     }
     
 }

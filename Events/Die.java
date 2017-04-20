@@ -2,7 +2,8 @@ package Events;
 import Timers.*;
 import Items.*;
 import Game.*;
-
+import Commands.DropCommand;
+import Dungeon.Room;
 /**
  *
  * @author jordan.smith
@@ -15,6 +16,7 @@ public class Die implements Events{
     private boolean hasCalledTimer = false;
     private Item item;
     private String message;
+    private Room currentRoom;
     
     /**
      * 
@@ -25,6 +27,7 @@ public class Die implements Events{
     public Die(int timeTillDeath, Item item){
         time = new GameTimer(this, timeTillDeath);
         this.item = item;
+        
         
     }
     
@@ -41,14 +44,20 @@ public class Die implements Events{
     
     
     public void execute(){
+        
             if(time != null && hasCalledTimer == false){
                 startTimer();
+                currentRoom = GameState.instance().getPlayer().getAdventurersCurrentRoom();
+                return;
+            }
+            else if(hasCalledTimer == true && currentRoom.equals(GameState.instance().getPlayer().getAdventurersCurrentRoom())){
+                //Finds the message for the event and prints it out.
+                System.out.println("\nYou Died from the " + this.item.getPrimaryName() + "!");
+                System.exit(0);
                 return;
             }
             else if(hasCalledTimer == true){
                 //Finds the message for the event and prints it out.
-                System.out.println("\nYou Died from the " + this.item.getPrimaryName() + "!");
-                System.exit(0);
                 return;
             }
             else if(time == null){
@@ -63,6 +72,7 @@ public class Die implements Events{
         else
             execute();
     }
+    
             
     public void setHasCalledTimer(boolean x){
         this.hasCalledTimer = x;

@@ -1,4 +1,5 @@
 package Events;
+import Entities.Player;
 import Items.*;
 import Game.GameState;
 /**
@@ -7,6 +8,7 @@ import Game.GameState;
  */
 public class DisappearEvent implements Events {
     private Item orig;
+    private Player player = GameState.instance().getPlayer();
     
     public DisappearEvent(Item orig) {
         this.orig = orig;
@@ -14,24 +16,23 @@ public class DisappearEvent implements Events {
     
     @Override
     public void execute() {
-        GameState gs = GameState.instance();
         Item newItem;
         boolean found = true;
         
         // Check the player's inventory
         try {
-            if (gs.getItemFromInventoryNamed(orig.getPrimaryName()) != null) {
-                gs.getPlayer().removeFromInventory(orig);
+            if (player.getItemFromInventoryNamed(orig.getPrimaryName()) != null) {
+                player.removeFromInventory(orig);
             }
         } catch (Item.NoItemException ex) { found = false; }
         
         // If it's not in the inventory, then check the room
         if (!found) {
             try {
-                if (gs.getAdventurersCurrentRoom().getItemNamed(orig.getPrimaryName()) != null) {
-                    gs.getAdventurersCurrentRoom().remove(orig);
+                if (player.getAdventurersCurrentRoom().getItemNamed(orig.getPrimaryName()) != null) {
+                    player.getAdventurersCurrentRoom().remove(GameState.instance().getItemInVicinityNamed(orig.getPrimaryName()));
                 }
-            } catch (Item.NoItemException ex) { }
+            } catch (Item.NoItemException ex) { System.out.println("Not Found");}
         }
     }
 
@@ -44,6 +45,6 @@ public class DisappearEvent implements Events {
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return null;
+		return "DisappearEvent";
 	}
 }
