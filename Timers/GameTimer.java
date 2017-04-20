@@ -49,6 +49,7 @@ public class GameTimer {
                 if(ttl == 0){
                     timer.cancel();
                     timer.purge();
+                    task.cancel();
                     event.setHasCalledTimer(true);
                     event.execute();
                 }
@@ -59,6 +60,12 @@ public class GameTimer {
         timer.scheduleAtFixedRate(task, 1000, 1000);
         
         
+    }
+    
+    public void stop(){
+        timer.cancel();
+        timer.purge();
+        task.cancel();
     }
     
 /**

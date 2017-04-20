@@ -17,8 +17,9 @@ import Game.GameState;
 public class AttackTimer {
 
 	private int ttl = 0;
-    private Enemy e;
-   
+        private Enemy e;
+        private Timer timer;
+        private TimerTask task;
     
     /**
      * 
@@ -38,8 +39,8 @@ public class AttackTimer {
     	
     	
     	
-	    Timer timer = new Timer();
-	    TimerTask task = new TimerTask() {
+	    timer = new Timer();
+	    task = new TimerTask() {
 	    	
 	    	int countDown = ttl;
 	    	
@@ -48,15 +49,35 @@ public class AttackTimer {
 	            	countDown--;
 	            	if(countDown == 0){
 	                   e.attack(GameState.instance().getPlayer());
+                           System.out.print(">");
 	                   timer.cancel();
 	                   timer.purge();
+                           task.cancel();
 	                   
 	            	}
+                        else if(!e.canSeePlayer()){
+                            timer.cancel();
+                            timer.purge();
+                            task.cancel();
+                        }
 	                
 	            }
 	    };
 	    
 	    timer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+    
+    public void reset(){
+        timer.cancel();
+        timer.purge();
+        this.start();
+    }
+    
+    public void stop(){
+        e.setCanSeePlayer(false);
+        timer.cancel();
+        timer.purge();
+        task.cancel();
     }
     
 	
