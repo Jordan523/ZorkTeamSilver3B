@@ -34,10 +34,8 @@ public class GameState {
 
     private static GameState theInstance;
     private Dungeon dungeon;
-    private Room adventurersCurrentRoom;
     private static boolean isLightOut = true;
     
-    private static int adventurerScore = 0;
     private static Player player;
     
 
@@ -76,8 +74,8 @@ public class GameState {
 
         s.nextLine();  // Throw away "Adventurer:".
         String currentRoomLine = s.nextLine();
-        adventurersCurrentRoom = dungeon.getRoom(
-            currentRoomLine.substring(CURRENT_ROOM_LEADER.length()));
+        this.player.setAdventurersCurrentRoom(dungeon.getRoom(
+            currentRoomLine.substring(CURRENT_ROOM_LEADER.length())));
         while (s.hasNext()) {
             String next = s.nextLine();
             if(next.contains(INVENTORY_LEADER)){
@@ -90,6 +88,8 @@ public class GameState {
                     } catch (Item.NoItemException e) {
                         throw new IllegalSaveFormatException("No such item '" +
                             itemName + "'");
+                    } catch(Player.TooHeavyException e){
+                        System.out.println("Restored too much weight");
                     }
                 }
             }
@@ -100,7 +100,7 @@ public class GameState {
             }
             else if(next.contains(SCORE_LEADER)){
                     String[] sep = next.split(":");
-                    this.setScore(Integer.parseInt(sep[1].replace(" ", "")));
+                    this.player.setScore(Integer.parseInt(sep[1].replace(" ", "")));
             }
         }
     }
@@ -116,7 +116,7 @@ public class GameState {
         w.println(SAVE_FILE_VERSION);
         dungeon.storeState(w);
         w.println(ADVENTURER_MARKER);
-        w.println(CURRENT_ROOM_LEADER + adventurersCurrentRoom.getTitle());
+        w.println(CURRENT_ROOM_LEADER + this.player.getAdventurersCurrentRoom().getTitle());
         if (player.getInventory().size() > 0) {
             w.print(INVENTORY_LEADER);
             for (int i=0; i<player.getInventory().size()-1; i++) {
@@ -129,26 +129,18 @@ public class GameState {
         w.print(GameState.instance().player.getHealth());
         w.println();
         w.print(SCORE_LEADER);
-        w.print(GameState.instance().getScore());
+        w.print(GameState.instance().player.getScore());
         
         w.close();
     }
 
     void initialize(Dungeon dungeon) {
         this.dungeon = dungeon;
-        adventurersCurrentRoom = dungeon.getEntry();
-        System.out.println(adventurersCurrentRoom.getTitle());
+        this.player.setAdventurersCurrentRoom(dungeon.getEntry());
+        System.out.println(this.player.getAdventurersCurrentRoom().getTitle());
     }
 
-    public ArrayList<String> getInventoryNames() {
-        ArrayList<String> names = new ArrayList<String>();
-        for (Item item : player.getInventory()) {
-            names.add(item.getPrimaryName());
-        }
-        return names;
-    }
 
-    
     
     public Item getItemInVicinityNamed(String name) throws Item.NoItemException {
 
@@ -160,7 +152,7 @@ public class GameState {
         }
 
         // Next, check room contents.
-        for (Item item : adventurersCurrentRoom.getContents()) {
+        for (Item item : this.player.getAdventurersCurrentRoom().getContents()) {
             if (item.goesBy(name)) {
                 return item;
             }
@@ -169,42 +161,13 @@ public class GameState {
         throw new Item.NoItemException();
     }
 
-    public Item getItemFromInventoryNamed(String name) throws Item.NoItemException {
 
-        for (Item item : player.getInventory()) {
-            if (item.toString().equalsIgnoreCase(name)) {
-                return item;
-            }
-        }
-        throw new Item.NoItemException();
-    }
-
-    public Room getAdventurersCurrentRoom() {
-        return adventurersCurrentRoom;
-    }
-
-    public void setAdventurersCurrentRoom(Room room) {
-        adventurersCurrentRoom = room;
-    }
+   
 
     public Dungeon getDungeon() {
         return dungeon;
     }
-    
-    public void setScore(int x){
-    	this.adventurerScore = x;
-    }
-    public int getScore(){
-    	return this.adventurerScore;
-    }
-    
-    public void addScore(int s){
-    	this.adventurerScore += s;
-    }
-    
-    public void reduceScore(int s){
-    	this.adventurerScore -= s;
-    }
+     
     
     public void setLight(boolean x){
     	this.isLightOut = x;
