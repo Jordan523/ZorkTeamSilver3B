@@ -1,6 +1,7 @@
 package Dungeon;
+import Entities.Enemy;
+import Entities.Enemy.NoEnemyException;
 import Items.*;
-import Items.Weapon.NoWeaponException;
 import Game.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -12,7 +13,7 @@ import java.io.PrintWriter;
 
 /**
  * 
- * @author Jordan, Nathan, Matthew, Trevor
+ * @author Jordan.smith
  */
 public class Room {
     class NoRoomException extends Exception {}
@@ -25,7 +26,8 @@ public class Room {
     private ArrayList<Item> contents;
     private ArrayList<Exit> exits;
     private ArrayList<Exit> blockedExits;
-    private Hashtable<String,Weapon> weapons;
+    private Hashtable<String, Enemy> enemies;
+    public ArrayList<String> enemiesDefeated;
 
     Room(String title) {
         init();
@@ -95,7 +97,8 @@ public class Room {
         contents = new ArrayList<Item>();
         exits = new ArrayList<Exit>();
         blockedExits = new ArrayList<Exit>();
-        weapons = new Hashtable<String, Weapon>();
+        enemies = new Hashtable<String, Enemy>();
+        enemiesDefeated = new ArrayList<String>();
         beenHere = false;
     }
 
@@ -117,6 +120,11 @@ public class Room {
             }
             w.println(contents.get(contents.size()-1).getPrimaryName());
         }
+        /**if(!enemiesDefeated.isEmpty()){
+            w.println("Enemies Defeated:");
+            for(String e : enemiesDefeated)
+                w.print(e + ",");
+        }*/
         w.println(Dungeon.SECOND_LEVEL_DELIM);
     }
 
@@ -154,12 +162,6 @@ public class Room {
         }
         
         
-        try{
-        	Set<String> keys = weapons.keySet();
-        	for(String x : keys){
-        		description += "\n" + weapons.get(x).getDesc() + "\n";
-        	}
-        }catch(Exception e){ System.out.println("Got here");}
         
         
         for (Item item : contents) {
@@ -193,16 +195,10 @@ public class Room {
             
         }
         
-        try{
-        	Set<String> keys = weapons.keySet();
-        	for(String x : keys){
-        		weapons.get(x).getDesc();
-        	}
-        }catch(Exception e){}
         
         
         beenHere = true;
-        return description;
+        return description + "\n";
     }
     
     public Room leaveBy(String dir) {
@@ -258,18 +254,40 @@ public class Room {
      * this method will add a container object to the room
      * @param container
      */
-    public void addWeapon(Weapon weapon)
+    public void addEnemy(Enemy enemy)
     {
-        weapons.put(weapon.getName(), weapon);
+        enemies.put(enemy.getName(), enemy);
     }
     
-    public Weapon getWeaponNamed(String name) throws NoWeaponException{
-    	if(this.weapons.get(name) != null)	
-    		return this.weapons.get(name);
-    	else
-    		return null;
+    public Enemy getEnemy(String name) throws NoEnemyException{
+        Enemy e = null;
+        
+        Set<String> keys = enemies.keySet();
+        for(String x : keys){
+            if(x.equalsIgnoreCase(name))
+                e = enemies.get(name);
+        }
+        if(e == null)
+            throw new NoEnemyException();
+        return e;
+    }
+    
+    public void removeEnemy(String name){
+        this.enemies.get(name).setCurrentRoom(null);
+        this.enemies.remove(name);
     }
     public ArrayList<Item> getContents() {
         return contents;
+    }
+    
+    public boolean hasEnemies(){
+        if(enemies.isEmpty() || enemies == null)
+            return false;
+        else
+            return true;
+    }
+    
+    public void addDefeatedEnemy(Enemy e){
+        this.enemiesDefeated.add(e.getName());
     }
 }

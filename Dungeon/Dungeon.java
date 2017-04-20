@@ -2,7 +2,6 @@ package Dungeon;
 import Game.GameState;
 import Items.*;
 import Items.Item.NoItemException;
-import Items.Weapon.NoWeaponException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +65,6 @@ public class Dungeon {
     private Hashtable<String,Room> rooms;
     private Hashtable<String,Item> items;
     private ArrayList<Enemy> enemies;
-    private Hashtable<String,Weapon> weapons;
     private String filename;
 
     Dungeon(String name, Room entry) {
@@ -136,6 +134,7 @@ public class Dungeon {
             // Instantiate and add first room (the entry).
             entry = new Room(s, this, initState);
             add(entry);
+            GameState.instance().getPlayer().setAdventurersCurrentRoom(entry);
 
             // Instantiate and add other rooms.
             while (true) {
@@ -187,8 +186,11 @@ public class Dungeon {
         	while(true){
         		String next = s.nextLine();
         		System.out.println(next);
-        		if(next.equals("---"))
+        		if(next.equals("---")){
         			next = s.nextLine();
+                                if(next.equals("==="))
+                                    break;
+                        }
         		else if(next.equals("==="))
         			break;
         		new Enemy(s, this, next);	
@@ -209,7 +211,6 @@ public class Dungeon {
         rooms = new Hashtable<String,Room>();
         items = new Hashtable<String,Item>();
         enemies = new ArrayList<Enemy>();
-        weapons = new Hashtable<String,Weapon>();
     }
 
     
@@ -218,7 +219,13 @@ public class Dungeon {
     	GameState.instance().getPlayer().update();
     	
     	for(Enemy e : enemies){
-    		e.update();
+                
+                if(e.getHealth() <= 0)
+                    try{
+                    e.getCurrentRoom().removeEnemy(e.getName());
+                    }catch(Exception x){}
+                else
+                    e.update();
     	}
     	
     	
@@ -254,6 +261,7 @@ public class Dungeon {
 
         String roomName = s.nextLine();
         while (!roomName.equals(TOP_LEVEL_DELIM)) {
+            System.out.println(roomName);
             getRoom(roomName.substring(0,roomName.length()-1)).
                 restoreState(s, this);
             roomName = s.nextLine();
@@ -265,7 +273,6 @@ public class Dungeon {
     public String getFilename() { return filename; }
     public void add(Room room) { rooms.put(room.getTitle(),room); }
     public void add(Item item) { items.put(item.getPrimaryName(),item); }
-    public void add(Weapon weapon){ weapons.put(weapon.getName(), weapon); }
 
     public Room getRoom(String roomTitle) {
         return rooms.get(roomTitle);
@@ -284,9 +291,6 @@ public class Dungeon {
         return items.get(primaryItemName);
     }
     
-    public Weapon getWeapon(String weaponName){
-    	return this.weapons.get(weaponName);
-    }
     /**
      * This allows for the rooms to be accessed in teleport
      * @return 
