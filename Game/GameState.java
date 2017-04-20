@@ -144,14 +144,14 @@ public class GameState {
     
     public Item getItemInVicinityNamed(String name) throws Item.NoItemException {
 
-        // First, check inventory
+        // First, check inventory.
         for (Item item : player.getInventory()) {
             if (item.goesBy(name)) {
                 return item;
             }
         }
 
-        // Next, check room contents
+        // Next, check room contents.
         for (Item item : this.player.getAdventurersCurrentRoom().getContents()) {
             if (item.goesBy(name)) {
                 return item;
