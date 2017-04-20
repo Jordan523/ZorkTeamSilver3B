@@ -43,7 +43,6 @@ public class AttackEvent implements Events{
 		int damageChance = rand.nextInt(2) + 1;
         int critChance = rand.nextInt(100) + 1;
         
-        System.out.println("Test");
       
         
         switch(damageChance){
