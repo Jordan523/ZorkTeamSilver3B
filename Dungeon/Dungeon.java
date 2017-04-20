@@ -176,32 +176,33 @@ public class Dungeon {
             }
         } catch (Exit.NoExitException e) {  /* end of exits */ }
         
-        if(!s.nextLine().equals(ENEMIES_MARKER)){
-        	throw new IllegalDungeonFormatException("No enemies found.");
+        if(s.hasNextLine()){
+	        if(!s.nextLine().equals(ENEMIES_MARKER)){
+	        	throw new IllegalDungeonFormatException("No enemies found.");
+	        }
+	        
+	        
+	        try{
+	        	
+	        	while(true){
+	        		String next = s.nextLine();
+	        		System.out.println(next);
+	        		if(next.equals("---")){
+	        			next = s.nextLine();
+	                                if(next.equals("==="))
+	                                    break;
+	                        }
+	        		else if(next.equals("==="))
+	        			break;
+	        		new Enemy(s, this, next);	
+	  
+	        		}
+	        		
+	        	
+	        }catch(NoEnemyException e){
+	        	
+	        }
         }
-        
-        
-        try{
-        	
-        	while(true){
-        		String next = s.nextLine();
-        		System.out.println(next);
-        		if(next.equals("---")){
-        			next = s.nextLine();
-                                if(next.equals("==="))
-                                    break;
-                        }
-        		else if(next.equals("==="))
-        			break;
-        		new Enemy(s, this, next);	
-  
-        		}
-        		
-        	
-        }catch(NoEnemyException e){
-        	
-        }
-        
         s.close();
     }
     
