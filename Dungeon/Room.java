@@ -83,7 +83,7 @@ public class Room {
                 for (String itemName : itemNames) {
                     try {
                         if (initState) {
-                            System.out.println(itemName);
+                            //System.out.println(itemName);
                             add(d.getItem(itemName));
                         }
                     } catch (Item.NoItemException e) {
@@ -92,7 +92,7 @@ public class Room {
                     }
                 }
             } else {
-                System.out.println(lineOfDesc);
+                //System.out.println(lineOfDesc);
                 desc += lineOfDesc + "\n";
             }
             lineOfDesc = s.nextLine();

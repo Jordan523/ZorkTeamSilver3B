@@ -59,7 +59,7 @@ public class Exit {
         if (src.hasBlockedExit(this)) {
             return "There is a blocked doorway on the " + dir + " wall.";
         } else if (!dest.getLight()) {
-            return "You could go " + dir + ", but you cannot see into the darkness.";
+            return "You could go " + dir + ", but the passage is too dark to read.";
         } else {
             return "You can go " + dir + " to " + dest.getTitle() + ".";
         }
