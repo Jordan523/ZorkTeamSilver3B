@@ -19,7 +19,8 @@ public class Room {
     class NoRoomException extends Exception {}
 
     static String CONTENTS_STARTER = "Contents: ";
-
+    static String LIGHT_STATUS = "Light: ";
+    
     private String title;
     private String desc;
     private boolean beenHere;
@@ -50,28 +51,39 @@ public class Room {
      * @throws Dungeon.IllegalDungeonFormatException 
      */
     Room(Scanner s, Dungeon d, boolean initState) throws NoRoomException,
-        Dungeon.IllegalDungeonFormatException {
+        Dungeon.IllegalDungeonFormatException 
+        {
 
         init();
         title = s.nextLine();
         desc = "";
-        System.out.println(title);
+        //System.out.println(title);
         if (title.equals(Dungeon.TOP_LEVEL_DELIM)) {
             throw new NoRoomException();
         }
         
         String lineOfDesc = s.nextLine();
-        System.out.println(lineOfDesc);
+        //System.out.println(lineOfDesc);
         while (!lineOfDesc.equals(Dungeon.SECOND_LEVEL_DELIM) &&
                !lineOfDesc.equals(Dungeon.TOP_LEVEL_DELIM)) {
-
+            
+            String[] lightStatus = lineOfDesc.split(":");
+            
+            for(String lights : lightStatus) 
+            {
+                if(lights.equalsIgnoreCase("off"))
+                    setLight(false);
+            }
+            
+            
+            //lineOfDesc = s.nextLine();        
             if (lineOfDesc.startsWith(CONTENTS_STARTER)) {
                 String itemsList = lineOfDesc.substring(CONTENTS_STARTER.length());
                 String[] itemNames = itemsList.split(",");
                 for (String itemName : itemNames) {
                     try {
                         if (initState) {
-                        	System.out.println(itemName);
+                            System.out.println(itemName);
                             add(d.getItem(itemName));
                         }
                     } catch (Item.NoItemException e) {
@@ -80,7 +92,7 @@ public class Room {
                     }
                 }
             } else {
-            	System.out.println(lineOfDesc);
+                System.out.println(lineOfDesc);
                 desc += lineOfDesc + "\n";
             }
             lineOfDesc = s.nextLine();
@@ -92,8 +104,10 @@ public class Room {
                 Dungeon.SECOND_LEVEL_DELIM + "' after room.");
         }
     }
-
+    
+    
     // Common object initialization tasks.
+
     private void init() {
         contents = new ArrayList<Item>();
         exits = new ArrayList<Exit>();
@@ -101,6 +115,7 @@ public class Room {
         enemies = new Hashtable<String, Enemy>();
         enemiesDefeated = new ArrayList<String>();
         beenHere = false;
+        isLightOn = true;
     }
 
     public String getTitle() { return title; }
@@ -174,13 +189,24 @@ public class Room {
             }
         }
         
-        if(getLight()) {
+        
+        if(getLight())
+        {
             beenHere = true;
             return description;
         }
-        else {
+        else
+        {
             return lightOffDesc;
         }
+    }
+    public boolean getLight()
+    {
+        return this.isLightOn;
+    }
+    public void setLight(boolean l)
+    {
+        this.isLightOn = l;
     }
     
     public String fullDescribe(){
