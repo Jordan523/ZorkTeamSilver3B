@@ -169,6 +169,8 @@ public class Room {
         }
     }
 
+    // =========================================================================
+    // Exit Methods
     public String describe() {
         String description;
         String lightOffDesc = "You see only darkness. \n \n ...maybe a light would help?";
@@ -199,14 +201,6 @@ public class Room {
         {
             return lightOffDesc;
         }
-    }
-    public boolean getLight()
-    {
-        return this.isLightOn;
-    }
-    public void setLight(boolean l)
-    {
-        this.isLightOn = l;
     }
     
     public String fullDescribe(){
@@ -267,6 +261,8 @@ public class Room {
         this.blockedExits.add(exit);
     }
     
+    // =========================================================================
+    // Property Methods
     public boolean getLight()
     {
         return this.isLightOn;
@@ -292,6 +288,9 @@ public class Room {
         }
         throw new Item.NoItemException();
     }
+    
+    // =========================================================================
+    // Enemy Methods
     /**
      * this method will add a container object to the room
      * @param container
