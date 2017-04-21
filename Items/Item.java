@@ -36,12 +36,12 @@ public class Item {
         String next = s.nextLine();
         
         if(next.contains("weapon")){
-        	String[] nameAndStats = next.split(":");
-        	String[] stats = nameAndStats[1].split(",");
-        	
-        	this.events.put(new AttackEvent(Integer.parseInt(stats[0]), Integer.parseInt(stats[1])), "attack");
-        	
-        	next = s.nextLine();
+            String[] nameAndStats = next.split(":");
+            String[] stats = nameAndStats[1].split(",");
+            
+            this.events.put(new AttackEvent(Integer.parseInt(stats[0]), Integer.parseInt(stats[1])), "attack");
+            
+            next = s.nextLine();
         }
 
         // Read item weight.
@@ -78,19 +78,21 @@ public class Item {
                     if (evName.equalsIgnoreCase("DeadTimer"))
                         this.events.put(new Die(Integer.parseInt(evParam), this), verb);
                     else if (evName.equalsIgnoreCase("Die"))
-                    	this.events.put(new Die(), verb);
+                        this.events.put(new Die(), verb);
                     else if (evName.equalsIgnoreCase("Disappear"))
-                    	this.events.put(new DisappearEvent(this), verb);
+                        this.events.put(new DisappearEvent(this), verb);
                     else if (evName.equalsIgnoreCase("Score"))
-                    	this.events.put(new AddScore(Integer.parseInt(evParam)), verb);
+                        this.events.put(new AddScore(Integer.parseInt(evParam)), verb);
                     else if (evName.equalsIgnoreCase("Transform"))
-                    	this.events.put(new TransformEvent(evParam, this), verb);
+                        this.events.put(new TransformEvent(evParam, this), verb);
                     else if (evName.equalsIgnoreCase("Wound"))
-                    	this.events.put(new Wound(Integer.parseInt(evParam)), verb);
+                        this.events.put(new Wound(Integer.parseInt(evParam)), verb);
                     else if(evName.equalsIgnoreCase("Win"))
                         this.events.put(new Win(), verb);
                     else if(evName.equalsIgnoreCase("Heal"))
                         this.events.put(new HealEvent(Integer.valueOf(evParam)), verb);
+                    else if(evName.equalsIgnoreCase("Illuminate"))
+                        this.events.put(new IlluminateEvent(), verb);
                 }
             } else {
                 verb = verbParts[0];
@@ -175,15 +177,15 @@ public class Item {
      * Returns the damage of the items attack event. If no attack event exists then it will return 0.
      */
     public int getDamage(){
-    	Set<Events> keys = this.events.keySet();
-    	AttackEvent temp;
-    	for(Events e : keys){
-    		if(e.getType().equalsIgnoreCase("AttackEvent")){
-    			temp = (AttackEvent)e;
-    			return temp.getDamage();
-    		}
-    	}
-    	return 0;
+        Set<Events> keys = this.events.keySet();
+        AttackEvent temp;
+        for(Events e : keys){
+            if(e.getType().equalsIgnoreCase("AttackEvent")){
+                temp = (AttackEvent)e;
+                return temp.getDamage();
+            }
+        }
+        return 0;
     }
     
     /**
@@ -192,16 +194,16 @@ public class Item {
      * Will return max damage of the attack event or 0 if no attack event exists.
      */
     public int getMaxDamage(){
-    	
-    	Set<Events> keys = this.events.keySet();
-    	AttackEvent temp;
-    	for(Events e : keys){
-    		if(e.getType().equalsIgnoreCase("AttackEvent")){
-    			temp = (AttackEvent)e;
-    			return temp.getMaxDamage();
-    		}
-    	}
-    	return 0;
+        
+        Set<Events> keys = this.events.keySet();
+        AttackEvent temp;
+        for(Events e : keys){
+            if(e.getType().equalsIgnoreCase("AttackEvent")){
+                temp = (AttackEvent)e;
+                return temp.getMaxDamage();
+            }
+        }
+        return 0;
     }
     
     /**
@@ -210,17 +212,17 @@ public class Item {
      * Will return minimum damage of attack event or 0 if none exists.
      */
     public int getMinDamage(){
-    	
-    	Set<Events> keys = this.events.keySet();
-    	AttackEvent temp;
-    	for(Events e : keys){
-    		if(e.getType().equalsIgnoreCase("AttackEvent")){
-    			temp = (AttackEvent)e;
-    			return temp.getMinDamage();
-    		}
-    	}
-    	return 0;
-    	
+        
+        Set<Events> keys = this.events.keySet();
+        AttackEvent temp;
+        for(Events e : keys){
+            if(e.getType().equalsIgnoreCase("AttackEvent")){
+                temp = (AttackEvent)e;
+                return temp.getMinDamage();
+            }
+        }
+        return 0;
+        
     }
     
     /**
