@@ -1,7 +1,7 @@
 package Dungeon;
  
-
 import java.util.Scanner;
+
 
 public class Exit {
 
@@ -56,10 +56,27 @@ public class Exit {
     }
 
     String describe() {
-        return "You can go " + dir + " to " + dest.getTitle() + ".";
+        if (src.hasBlockedExit(this)) {
+            return "There is a blocked doorway on the " + dir + " wall.";
+        } else if (!dest.getLight()) {
+            return "You could go " + dir + ", but you cannot see into the darkness.";
+        } else {
+            return "You can go " + dir + " to " + dest.getTitle() + ".";
+        }
     }
 
     String getDir() { return dir; }
     Room getSrc() { return src; }
-    Room getDest() { return dest; }
+    Room getDest() {
+        if (src.hasBlockedExit(this)) {
+            System.out.println("You try to force your way past with no avail.");
+            return null;
+        } else if (!dest.getLight()) {
+            // add check for if player can illuminate the room anyways?
+            System.out.println("You tremble at the though of what might hide in the shadows beyond.");
+            return null;
+        } else {
+            return dest;
+        }
+    }
 }

@@ -23,6 +23,7 @@ public class Room {
     private String title;
     private String desc;
     private boolean beenHere;
+    private boolean isLightOn = true;
     private ArrayList<Item> contents;
     private ArrayList<Exit> exits;
     private ArrayList<Exit> blockedExits;
@@ -155,14 +156,12 @@ public class Room {
 
     public String describe() {
         String description;
+        String lightOffDesc = "You see only darkness. \n \n ...maybe a light would help?";
         if (beenHere) {
             description = title;
         } else {
             description = title + "\n" + desc;
         }
-        
-        
-        
         
         for (Item item : contents) {
             description += "\nThere is " + Dungeon.aOrAn(item.getPrimaryName())
@@ -175,10 +174,13 @@ public class Room {
             }
         }
         
-        
-        
-        beenHere = true;
-        return description;
+        if(getLight()) {
+            beenHere = true;
+            return description;
+        }
+        else {
+            return lightOffDesc;
+        }
     }
     
     public String fullDescribe(){
@@ -195,8 +197,6 @@ public class Room {
             
         }
         
-        
-        
         beenHere = true;
         return description + "\n";
     }
@@ -212,6 +212,13 @@ public class Room {
 
     void addExit(Exit exit) {
         exits.add(exit);
+    }
+    
+    public boolean hasBlockedExit(Exit exit) {
+        for (Exit e : blockedExits) {
+            if (e.equals(exit)) return true;
+        }
+        return false;
     }
     /**
      * Removes an Exit from the Room's blocked ArrayList and adds it to exits.
@@ -233,7 +240,16 @@ public class Room {
         }
         this.blockedExits.add(exit);
     }
-
+    
+    public boolean getLight()
+    {
+        return this.isLightOn;
+    }
+    public void setLight(boolean l)
+    {
+        this.isLightOn = l;
+    }
+    
     public void add(Item item) {
         contents.add(item);
     }
