@@ -81,18 +81,20 @@ public class Item {
                         this.events.put(new Die(), verb);
                     else if (evName.equalsIgnoreCase("Disappear"))
                         this.events.put(new DisappearEvent(this), verb);
-                    else if (evName.equalsIgnoreCase("Score"))
-                        this.events.put(new AddScore(Integer.parseInt(evParam)), verb);
-                    else if (evName.equalsIgnoreCase("Transform"))
-                        this.events.put(new TransformEvent(evParam, this), verb);
-                    else if (evName.equalsIgnoreCase("Wound"))
-                        this.events.put(new Wound(Integer.parseInt(evParam)), verb);
-                    else if(evName.equalsIgnoreCase("Win"))
-                        this.events.put(new Win(), verb);
                     else if(evName.equalsIgnoreCase("Heal"))
                         this.events.put(new HealEvent(Integer.valueOf(evParam)), verb);
                     else if(evName.equalsIgnoreCase("Illuminate"))
                         this.events.put(new IlluminateEvent(), verb);
+                    else if (evName.equalsIgnoreCase("Score"))
+                        this.events.put(new AddScore(Integer.parseInt(evParam)), verb);
+                    else if (evName.equalsIgnoreCase("Transform"))
+                        this.events.put(new TransformEvent(evParam, this), verb);
+                    else if (evName.equalsIgnoreCase("Transform"))
+                        this.events.put(new Unlock(evParam), verb);
+                    else if (evName.equalsIgnoreCase("Wound"))
+                        this.events.put(new Wound(Integer.parseInt(evParam)), verb);
+                    else if(evName.equalsIgnoreCase("Win"))
+                        this.events.put(new Win(), verb);
                 }
             } else {
                 verb = verbParts[0];

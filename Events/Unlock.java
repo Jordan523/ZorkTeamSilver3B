@@ -9,17 +9,17 @@ import Game.GameState;
 public class Unlock implements Events {
     private Room origin;
     
-    public Unlock(Room room) {
-        this.origin = room;
+    public Unlock(String rName) {
+        this.origin = GameState.instance().getDungeon().getRoom(rName);
     }
     
     @Override
     public void execute() {
-        GameState gs = GameState.instance();
-        
-        origin.setBlockage(false);
+        if (origin != null) {
+            origin.setBlockage(false);
+        }
     }
- 
+    
     @Override
     public boolean hasCalledTimer() { return false; }
     @Override
