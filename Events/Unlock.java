@@ -12,6 +12,12 @@ public class Unlock implements Events {
     private Room room;
     private Item key;
     
+    /**
+     * Constructor for Unlock. Requires a room name parameter, but key is
+     * an optional parameter to make the item disappear after using.
+     * @param rName
+     * @param key 
+     */
     public Unlock(String rName, Item key) {
         this.room = gs.getDungeon().getRoom(rName);
         this.key = key;
