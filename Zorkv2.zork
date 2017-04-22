@@ -2,10 +2,6 @@ Trinkle
 Group Bork v2.0
 ===
 Items:
-Torch
-10
-light[Illuminate]:Light pours from the torch, illuminating your surroundings.
----
 Bomb
 95
 examine:The bomb is a heavy, glistening black sphere. On the top appears to be some form of detonator.
@@ -74,36 +70,30 @@ use[Disappear,Heal(20)]:Used the Potion.
 ===
 Rooms:
 Rotunda
-Light:on
-Contents: AncientSword,Bomb,Torch
+Contents: AncientSword,Bomb
 You are in a beautiful round entry chamber, with tall white pillars that
 seemingly reach to the skies. There is an elevator here.
 ---
 Basement hallway
-Light:off
 Contents: DrPepper
 A long, white hallway stretches to the east and west. It is cold here, and you
 can detect the faint buzz of computer fans. A vending machine hums softly in the
 corner.
 ---
 Stephen's office
-Light:on
 Contents: StarWarsToy,WawaTravelMug,donut
 This is a cluttered office, with many geeky toys sprawling on a desk.
 ---
 Room B6
-Light:on
 Sunlight streams through tall windows and illuminates a brilliant classroom.
 ---
 Room B13
-Light:on
 Contents: Bomb
 Rows of state-of-the-art computers line the room, with happy young people typing
 merrily away at several of them. They look up and wave hello to you.
 The door locks behind you.
 ---
 Rotunda balcony
-Light:on
 Contents: chainsaw,magicWand
 You stand on a circular white balcony overlooking an entry hall.
 Columnar bannisters in ancient Grecian style stand between you and the

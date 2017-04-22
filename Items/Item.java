@@ -179,12 +179,16 @@ public class Item {
     public int getDamage(){
         Set<Events> keys = this.events.keySet();
         AttackEvent temp;
-        for(Events e : keys){
-            if(e.getType().equalsIgnoreCase("AttackEvent")){
-                temp = (AttackEvent)e;
-                return temp.getDamage();
-            }
-        }
+        try{
+	        for(Events e : keys){
+	            if(e.getType().equalsIgnoreCase("AttackEvent")){
+	                temp = (AttackEvent)e;
+	                return temp.getDamage();
+	            }
+	        }
+	        }catch(Exception e){
+	        	return 0;
+	      }
         return 0;
     }
     
