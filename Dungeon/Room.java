@@ -239,7 +239,7 @@ public class Room {
      * Toggles a blocked boolean to signal whether the room can be visited.
      * @param exit 
      */
-    void setBlockage(boolean b) {
+    public void setBlockage(boolean b) {
         this.blocked = b;
     }
     

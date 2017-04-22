@@ -126,7 +126,7 @@ public class Item {
      */
     public boolean goesBy(String name) {
         // could have other aliases
-        return this.primaryName.equalsIgnoreCase(name);
+        return this.primaryName.contains(name);
     }
 
     /**

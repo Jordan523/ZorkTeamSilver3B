@@ -68,7 +68,7 @@ public class Exit {
     String getDir() { return dir; }
     Room getSrc() { return src; }
     Room getDest() {
-        if (src.isBlocked()) {
+        if (dest.isBlocked()) {
             System.out.println("You try to force your way past with no avail.");
             return null;
         } else if (!dest.getLight()) {
