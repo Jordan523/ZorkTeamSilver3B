@@ -56,7 +56,7 @@ public class Exit {
     }
 
     String describe() {
-        if (src.hasBlockedExit(this)) {
+        if (src.isBlocked()) {
             return "There is a blocked doorway on the " + dir + " wall.";
         } else if (!dest.getLight()) {
             return "You could go " + dir + ", but the passage is too dark to read.";
@@ -68,13 +68,13 @@ public class Exit {
     String getDir() { return dir; }
     Room getSrc() { return src; }
     Room getDest() {
-        if (src.hasBlockedExit(this)) {
+        if (src.isBlocked()) {
             System.out.println("You try to force your way past with no avail.");
             return null;
         } else if (!dest.getLight()) {
             // add check for if player can illuminate the room anyways?
-            System.out.println("You tremble at the though of what might hide in the shadows beyond.");
-            return null;
+            //System.out.println("You tremble at the though of what might hide in the shadows beyond.");
+            return dest;
         } else {
             return dest;
         }

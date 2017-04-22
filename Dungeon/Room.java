@@ -20,14 +20,15 @@ public class Room {
 
     static String CONTENTS_STARTER = "Contents: ";
     static String LIGHT_STATUS = "Light: ";
+    static String LOCK_STATUS = "Lock:";
     
     private String title;
     private String desc;
     private boolean beenHere;
     private boolean isLightOn = true;
+    private boolean blocked = false;
     private ArrayList<Item> contents;
     private ArrayList<Exit> exits;
-    private ArrayList<Exit> blockedExits;
     private Hashtable<String, Enemy> enemies;
     public ArrayList<String> enemiesDefeated;
 
@@ -67,16 +68,6 @@ public class Room {
         while (!lineOfDesc.equals(Dungeon.SECOND_LEVEL_DELIM) &&
                !lineOfDesc.equals(Dungeon.TOP_LEVEL_DELIM)) {
             
-            String[] lightStatus = lineOfDesc.split(":");
-            
-            for(String lights : lightStatus) 
-            {
-                if(lights.equalsIgnoreCase("off"))
-                    setLight(false);
-            }
-            
-            
-            //lineOfDesc = s.nextLine();        
             if (lineOfDesc.startsWith(CONTENTS_STARTER)) {
                 String itemsList = lineOfDesc.substring(CONTENTS_STARTER.length());
                 String[] itemNames = itemsList.split(",");
@@ -90,6 +81,17 @@ public class Room {
                         throw new Dungeon.IllegalDungeonFormatException(
                             "No such item '" + itemName + "'");
                     }
+                }
+            } else if (lineOfDesc.startsWith(LOCK_STATUS)) {
+                String[] lSplit = lineOfDesc.split(":");
+                
+                this.blocked = (lSplit.length>1 && lSplit[1].contains("true"));
+            } else if (lineOfDesc.startsWith(LIGHT_STATUS)) {
+                String[] lightStatus = lineOfDesc.split(":");
+                
+                for(String lights : lightStatus) {
+                    if (lights.contains("off"))
+                        setLight(false);
                 }
             } else {
                 //System.out.println(lineOfDesc);
@@ -105,13 +107,10 @@ public class Room {
         }
     }
     
-    
     // Common object initialization tasks.
-
     private void init() {
         contents = new ArrayList<Item>();
         exits = new ArrayList<Exit>();
-        blockedExits = new ArrayList<Exit>();
         enemies = new Hashtable<String, Enemy>();
         enemiesDefeated = new ArrayList<String>();
         beenHere = false;
@@ -119,7 +118,6 @@ public class Room {
     }
 
     public String getTitle() { return title; }
-
     void setDesc(String desc) { this.desc = desc; }
 
     /*
@@ -234,31 +232,15 @@ public class Room {
         exits.add(exit);
     }
     
-    public boolean hasBlockedExit(Exit exit) {
-        for (Exit e : blockedExits) {
-            if (e.equals(exit)) return true;
-        }
-        return false;
+    public boolean isBlocked() {
+        return this.blocked;
     }
     /**
-     * Removes an Exit from the Room's blocked ArrayList and adds it to exits.
+     * Toggles a blocked boolean to signal whether the room can be visited.
      * @param exit 
      */
-    void unblockExit(Exit exit) {
-        if (this.blockedExits.contains(exit)) {
-            this.blockedExits.remove(exit);
-            this.exits.add(exit);
-        }
-    }
-    /**
-     * Adds a blocked exit to the room, removing it from exits ArrayList if needed
-     * @param exit 
-     */
-    void blockExit(Exit exit) {
-        if (this.exits.contains(exit)) {
-            this.exits.remove(exit);
-        }
-        this.blockedExits.add(exit);
+    void setBlockage(boolean b) {
+        this.blocked = b;
     }
     
     // =========================================================================
