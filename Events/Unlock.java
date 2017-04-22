@@ -1,22 +1,30 @@
 package Events;
 import Dungeon.*;
 import Game.GameState;
+import Items.*;
 
 /** 
  * 
  * @author Nathan 
  */ 
 public class Unlock implements Events {
-    private Room origin;
+    private GameState gs = GameState.instance();
+    private Room room;
+    private Item key;
     
-    public Unlock(String rName) {
-        this.origin = GameState.instance().getDungeon().getRoom(rName);
+    public Unlock(String rName, Item key) {
+        this.room = gs.getDungeon().getRoom(rName);
+        this.key = key;
     }
     
     @Override
     public void execute() {
-        if (origin != null) {
-            origin.setBlockage(false);
+        if (room != null && room.isAdjacentTo(gs.getPlayer().getAdventurersCurrentRoom())) {
+            room.setBlockage(false);
+            
+            if (key != null) {
+                DisappearEvent d = new DisappearEvent(key);
+            }
         }
     }
     
@@ -25,7 +33,5 @@ public class Unlock implements Events {
     @Override
     public void setHasCalledTimer(boolean x) {}
     @Override
-    public String getType() {
-        return null; 
-    }
+    public String getType() { return null; }
 }

@@ -90,7 +90,7 @@ public class Item {
                     else if (evName.equalsIgnoreCase("Transform"))
                         this.events.put(new TransformEvent(evParam, this), verb);
                     else if (evName.equalsIgnoreCase("Transform"))
-                        this.events.put(new Unlock(evParam), verb);
+                        this.events.put(new Unlock(evParam, this), verb);
                     else if (evName.equalsIgnoreCase("Wound"))
                         this.events.put(new Wound(Integer.parseInt(evParam)), verb);
                     else if(evName.equalsIgnoreCase("Win"))

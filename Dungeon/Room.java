@@ -212,7 +212,6 @@ public class Room {
         
         for (Exit exit : exits) {
                 description += "\n" + exit.describe();
-            
         }
         
         beenHere = true;
@@ -249,9 +248,18 @@ public class Room {
     {
         return this.isLightOn;
     }
+    
     public void setLight(boolean l)
     {
         this.isLightOn = l;
+    }
+    
+    public boolean isAdjacentTo(Room room) {
+        for (Exit e : exits) {
+            if (e.getDir().equals(room))
+                return true;
+        }
+        return false;
     }
     
     public void add(Item item) {
