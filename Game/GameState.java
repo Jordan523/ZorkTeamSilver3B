@@ -180,5 +180,12 @@ public class GameState {
     public void initPlayer(String playerName){
     	this.player = new Player(150, playerName);
     }
+    private boolean earthquake = false;
+    public void setEarthquake(boolean b){
+        this.earthquake = b;
+    }
+    public boolean getEarthquake(){
+        return this.earthquake;
+    }
 
 }

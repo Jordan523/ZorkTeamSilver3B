@@ -25,7 +25,7 @@ class TakeCommand extends Command {
             Item theItem = currentRoom.getItemNamed(itemName);
             GameState.instance().getPlayer().addToInventory(theItem);
             currentRoom.remove(theItem);
-            return itemName + " taken.\n";
+            return theItem.getPrimaryName() + " taken.\n";
       
         } catch (Item.NoItemException e) {
             // Check and see if we have this already. If no exception is

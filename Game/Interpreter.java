@@ -37,6 +37,7 @@ public class Interpreter {
         
         
         try {
+            int count = 0;
             state = GameState.instance();
             state.initPlayer(playerName);
             
@@ -63,7 +64,17 @@ public class Interpreter {
             while (running) {
                 Random rand = new Random();
                 int x = rand.nextInt(100);
-               
+               if(count == 5){
+                   if(GameState.instance().getEarthquake()==false){
+                   int q = rand.nextInt(10);
+                   if(q==1){
+                       Earthquake eq = new Earthquake();
+                       System.out.println(eq.execute1());
+                   }
+                   GameState.instance().setEarthquake(true);
+                   }
+                   count =0;
+               }
 
                 System.out.print(
                            CommandFactory.instance().parse(command).execute());
@@ -78,7 +89,7 @@ public class Interpreter {
                 command = promptUser(commandLine);
                 
                 
-               
+             count++;  
             }
 
             System.out.println("Bye!");
