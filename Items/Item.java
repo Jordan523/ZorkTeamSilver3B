@@ -128,6 +128,8 @@ public class Item {
      */
     public boolean goesBy(String name) {
         // could have other aliases
+        System.out.println(primaryName+"  "+primaryName.toLowerCase());
+        System.out.println(name+"  "+name.toLowerCase());
         return this.primaryName.toLowerCase().contains(name.toLowerCase());
     }
 

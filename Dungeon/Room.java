@@ -256,6 +256,7 @@ public class Room {
     public void setCoverage(boolean b){
         this.covered = b;
     }
+    
     // =========================================================================
     // Property Methods
     public boolean getLight()
@@ -286,7 +287,7 @@ public class Room {
 
     public Item getItemNamed(String name) throws Item.NoItemException {
         for (Item item : contents) {
-            if (item.toString().equalsIgnoreCase(name)) {
+            if (item.goesBy(name)) {
                 return item;
             }
         }
