@@ -95,6 +95,8 @@ public class Item {
                         this.events.put(new Wound(Integer.parseInt(evParam)), verb);
                     else if(evName.equalsIgnoreCase("Win"))
                         this.events.put(new Win(), verb);
+                    else if(evName.equalsIgnoreCase("Use"))
+                    	this.events.put(new UseEvent(this), verb);
                 }
             } else {
                 verb = verbParts[0];
