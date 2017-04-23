@@ -26,6 +26,7 @@ public class Room {
     private String desc;
     private boolean beenHere;
     private boolean isLightOn = true;
+    private boolean covered = false;
     private boolean blocked = false;
     private ArrayList<Item> contents;
     private ArrayList<Exit> exits;
@@ -241,7 +242,20 @@ public class Room {
     public void setBlockage(boolean b) {
         this.blocked = b;
     }
-    
+    /**
+     * This will return if the exit is covered by debris
+     * @return 
+     */
+    public boolean getCovered(){
+        return this.covered;
+    }
+    /**
+     * This will toggle between being covered and not covered
+     * @param boolean 
+     */
+    public void setCoverage(boolean b){
+        this.covered = b;
+    }
     // =========================================================================
     // Property Methods
     public boolean getLight()
