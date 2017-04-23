@@ -135,11 +135,15 @@ public class Room {
             }
             w.println(contents.get(contents.size()-1).getPrimaryName());
         }
-        /**if(!enemiesDefeated.isEmpty()){
-            w.println("Enemies Defeated:");
-            for(String e : enemiesDefeated)
-                w.print(e + ",");
-        }*/
+        try{
+        	if(!enemiesDefeated.isEmpty()){
+        		w.print("Enemies Defeated:");
+        		for(String e : enemiesDefeated)
+        			w.print(e + ",");
+        		w.println();
+        	}
+        }
+        catch(Exception e){w.println();}
         w.println(Dungeon.SECOND_LEVEL_DELIM);
     }
 
@@ -164,9 +168,36 @@ public class Room {
                         "No such item '" + itemName + "'");
                 }
             }
-            s.nextLine();  // Consume "---".
+            //s.nextLine();  // Consume "---".
         }
-    }
+        if(!line.equals("---")){
+	        String next = s.nextLine();
+	        System.out.println(next);
+	        if(!next.equalsIgnoreCase("---")){
+		        try{
+		        	String[] sep = next.split(":");
+		        	if(sep[0].equalsIgnoreCase("Enemies Defeated")){
+		        		//next = s.nextLine();
+		        		sep = sep[1].split(",");
+		        		try{
+			        	if(!enemies.isEmpty())
+			        		for(String x : sep){
+			        			this.enemies.get(x).setCurrentRoom(null);
+			        			this.enemies.remove(this.enemies.get(x));
+			        		}
+			        			
+		        		}catch(Exception e){}
+			        	s.nextLine(); //Throw away ---
+			        	}
+			        	
+			        }catch(Exception e){
+			        	
+			        }
+		        }
+        }
+	        
+        }
+    	
 
     // =========================================================================
     // Exit Methods
