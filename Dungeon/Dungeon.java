@@ -311,5 +311,15 @@ public class Dungeon {
     	this.enemies.add(e);
     }
     
+    public ArrayList<Room> getRooms(){
+    	
+    	ArrayList<Room> Rooms = new ArrayList<>();
+    	
+    	for(String x : this.rooms.keySet())
+    		Rooms.add(rooms.get(x));
+    	
+    	return Rooms;
+    	
+    }
     
 }
