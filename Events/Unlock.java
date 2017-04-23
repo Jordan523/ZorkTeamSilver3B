@@ -21,12 +21,12 @@ public class Unlock implements Events {
      */
     public Unlock(String rName, Item key) {
         this.type = rName;
-        this.room = gs.getDungeon().getRoom(rName);
         this.key = key;
     }
     
     @Override
     public void execute() {
+        room = gs.getDungeon().getRoom(type);
         if (room != null && room.isAdjacentTo(gs.getPlayer().getAdventurersCurrentRoom())) {
             room.setBlockage(false);
             
