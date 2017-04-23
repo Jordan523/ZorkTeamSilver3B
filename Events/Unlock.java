@@ -32,6 +32,8 @@ public class Unlock implements Events {
             
             if (key != null) {
                 DisappearEvent d = new DisappearEvent(key);
+                
+                d.execute();
             }
         }
     }
