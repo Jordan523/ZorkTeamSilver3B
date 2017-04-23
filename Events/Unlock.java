@@ -9,6 +9,7 @@ import Items.*;
  */ 
 public class Unlock implements Events {
     private GameState gs = GameState.instance();
+    private String type;
     private Room room;
     private Item key;
     
@@ -19,6 +20,7 @@ public class Unlock implements Events {
      * @param key 
      */
     public Unlock(String rName, Item key) {
+        this.type = rName;
         this.room = gs.getDungeon().getRoom(rName);
         this.key = key;
     }
