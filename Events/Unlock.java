@@ -26,7 +26,7 @@ public class Unlock implements Events {
     
     @Override
     public void execute() {
-        room = gs.getDungeon().getRoom(type);
+        this.room = gs.getDungeon().getRoom(type);
         if (room != null && room.isAdjacentTo(gs.getPlayer().getAdventurersCurrentRoom())) {
             room.setBlockage(false);
             

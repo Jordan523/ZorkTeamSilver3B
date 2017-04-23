@@ -262,7 +262,7 @@ public class Dungeon {
 
         String roomName = s.nextLine();
         while (!roomName.equals(TOP_LEVEL_DELIM)) {
-            System.out.println(roomName);
+            System.out.println(roomName+"*");
             getRoom(roomName.substring(0,roomName.length()-1)).
                 restoreState(s, this);
             roomName = s.nextLine();
@@ -311,5 +311,15 @@ public class Dungeon {
     	this.enemies.add(e);
     }
     
+    public ArrayList<Room> getRooms(){
+    	
+    	ArrayList<Room> Rooms = new ArrayList<>();
+    	
+    	for(String x : this.rooms.keySet())
+    		Rooms.add(rooms.get(x));
+    	
+    	return Rooms;
+    	
+    }
     
 }
