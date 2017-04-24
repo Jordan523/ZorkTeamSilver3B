@@ -10,19 +10,30 @@ public class SpeakCommand extends Command{
 	private Player player = GameState.instance().getPlayer();
 	private String entityName;
 	
-	public SpeakCommand(String name){
+	public SpeakCommand(String[] commandLine){
 		
-		this.entityName = name;
+		int connectorPlace = 0;
+		//Connector check
+		try{
+			for(String x : commandLine){
+				if(x.equalsIgnoreCase("with") || x.equalsIgnoreCase("to"))
+					this.entityName = commandLine[connectorPlace+1];
+				connectorPlace++;
+			}
+		}catch(Exception e){
+			System.out.println("Whoops, don't know how that happened.");
+			System.exit(0);
+		}
 		
 		try{
 		for(NPC x : GameState.instance().getDungeon().getNPCs()){
 			
-			if(x.getName().equalsIgnoreCase(name)){
+			if(x.getName().equalsIgnoreCase(this.entityName)){
 				this.entity = x;
 			}
 		}
 		}catch(Exception e){
-			System.out.println("Unable to speak with " +name+".\n");
+			System.out.println("What?.\n");
 		}
 		
 	}
@@ -34,10 +45,10 @@ public class SpeakCommand extends Command{
 		if(this.entity.getCurrentRoom().equals(player.getAdventurersCurrentRoom()))
 			this.entity.speakTo();
 		else
-			return "Unable to speak with " + this.entity.getName()+".\n";
+			return "Speak with what?\n";
 		return "\n";
 		}catch(Exception e){
-			return "Unable to speak with " + entityName +".\n";
+			return "What?\n";
 		}
 	}
 
