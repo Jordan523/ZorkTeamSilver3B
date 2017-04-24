@@ -1,6 +1,5 @@
 package Commands;
-import Game.*;
-import Dungeon.*;
+import Game.GameState;
  
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ class InventoryCommand extends Command {
         }
         String retval = "You are carrying:\n";
         for (String itemName : names) {
-            retval += "   "+Dungeon.aOrAn(itemName) + itemName + "\n";
+            retval += "   A " + itemName + "\n";
         }
         return retval;
     }
