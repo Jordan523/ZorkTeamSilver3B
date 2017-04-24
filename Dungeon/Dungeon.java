@@ -246,6 +246,8 @@ public class Dungeon {
                 else
                     e.update();
     	}
+    	for(NPC x : npcs)
+    		x.update();
     	
     	
     	
@@ -304,10 +306,11 @@ public class Dungeon {
      */
     public Item getItem(String primaryItemName) throws Item.NoItemException {
         
-        if (items.get(primaryItemName) == null) {
-            throw new Item.NoItemException();
+        for(String x : items.keySet()){
+        	if(items.get(x).getPrimaryName().equalsIgnoreCase(primaryItemName))
+        		return items.get(x);
         }
-        return items.get(primaryItemName);
+        throw new NoItemException();
     }
     
     /**
@@ -342,6 +345,16 @@ public class Dungeon {
     
     public ArrayList<NPC> getNPCs(){
     	return this.npcs;
+    }
+    
+    public NPC getNPC(String name){
+    	
+    	for(NPC x : npcs){
+    		if(x.getName().equalsIgnoreCase(name))
+    			return x;
+    	}
+    	
+    	return null;
     }
     
 }
