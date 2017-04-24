@@ -89,7 +89,7 @@ seemingly reach to the skies. There is an elevator here.
 ---
 Basement hallway
 Light:off
-Lock:false
+Lock:true
 Contents: DrPepper,Potion
 A long, white hallway stretches to the east and west. It is cold here, and you
 can detect the faint buzz of computer fans. A vending machine hums softly in the
