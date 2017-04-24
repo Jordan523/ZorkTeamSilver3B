@@ -128,6 +128,7 @@ public class Room {
         w.println(title + ":");
         w.println("beenHere=" + beenHere);
         w.println("light=" + this.getLight());
+        w.println("lock=" + this.blocked);
         if (contents.size() > 0) {
             w.print(CONTENTS_STARTER);
             for (int i=0; i<contents.size()-1; i++) {
@@ -153,11 +154,13 @@ public class Room {
             throw new GameState.IllegalSaveFormatException("No beenHere.");
         }
         beenHere = Boolean.valueOf(line.substring(line.indexOf("=")+1));
-
         line = s.nextLine();
         
         this.setLight(Boolean.valueOf(line.substring(line.indexOf("=")+1)));
         line = s.nextLine();
+        this.blocked = Boolean.valueOf(line.substring(line.indexOf("=")+1));
+        line = s.nextLine();
+        
         if (line.startsWith(CONTENTS_STARTER)) {
             String itemsList = line.substring(CONTENTS_STARTER.length());
             String[] itemNames = itemsList.split(",");
