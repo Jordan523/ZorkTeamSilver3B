@@ -31,6 +31,7 @@ public class GameState {
     static String INVENTORY_LEADER = "Inventory: ";
     static String HEALTH_LEADER = "Health: ";
     static String SCORE_LEADER = "Score: ";
+    static String TIME_LEADER = "Time:";
 
     private static GameState theInstance;
     private Dungeon dungeon;
@@ -102,6 +103,13 @@ public class GameState {
                     String[] sep = next.split(":");
                     this.player.setScore(Integer.parseInt(sep[1].replace(" ", "")));
             }
+            else if(next.contains(TIME_LEADER)){
+                	String[] messageAndTime = next.split(":");
+                	int min = Integer.valueOf(messageAndTime[1]);
+                	int sec = Integer.valueOf(messageAndTime[2]);
+                	GameState.instance().getPlayer().setTime(min, sec);
+            
+            }
         }
     }
     
@@ -130,7 +138,9 @@ public class GameState {
         w.println();
         w.print(SCORE_LEADER);
         w.print(GameState.instance().player.getScore());
-        
+        w.println();
+        w.print(TIME_LEADER);
+        w.print(player.getTime());
         w.close();
     }
 
@@ -140,6 +150,8 @@ public class GameState {
         System.out.println(this.player.getAdventurersCurrentRoom().getTitle());
     }
 
+
+    
     public Item getItemInVicinityNamed(String name) throws Item.NoItemException {
 
         // First, check inventory.
@@ -158,10 +170,14 @@ public class GameState {
 
         throw new Item.NoItemException();
     }
-    
+
+
+   
+
     public Dungeon getDungeon() {
         return dungeon;
     }
+     
     
     public void setLight(boolean x){
     	this.isLightOut = x;
