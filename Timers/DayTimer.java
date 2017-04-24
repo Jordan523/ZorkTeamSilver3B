@@ -61,7 +61,7 @@ public class DayTimer {
     public DayTimer(int min, int sec){
         this.minutes = min;
         this.seconds = sec;
-        this.start();
+        
     }
     
     /**
@@ -69,14 +69,17 @@ public class DayTimer {
      */
     public void start(){
         
-        timer.scheduleAtFixedRate(task, 300, 300);
+        timer.scheduleAtFixedRate(task, 500, 500);
     }
     
     /**
      * prints out the current time 
      */
-    public void getTime(){
-        System.out.println(minutes + ":" + seconds);
+    public String getTime(){
+    	if(seconds > 9)
+    		return minutes + ":" + seconds;
+    	else
+    		return minutes + ":0" + seconds;
     }
     
     /**
