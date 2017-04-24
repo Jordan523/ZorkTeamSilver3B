@@ -65,6 +65,12 @@ public class Room {
         }
         
         String lineOfDesc = s.nextLine();
+        String[] lightStatus = lineOfDesc.split(":");
+                
+        for(String lights : lightStatus) {
+            if (lights.contains("off"))
+                setLight(false);
+                }
         //System.out.println(lineOfDesc);
         while (!lineOfDesc.equals(Dungeon.SECOND_LEVEL_DELIM) &&
                !lineOfDesc.equals(Dungeon.TOP_LEVEL_DELIM)) {
@@ -87,13 +93,6 @@ public class Room {
                 String[] lSplit = lineOfDesc.split(":");
                 
                 this.blocked = (lSplit.length>1 && lSplit[1].contains("true"));
-            } else if (lineOfDesc.startsWith(LIGHT_STATUS)) {
-                String[] lightStatus = lineOfDesc.split(":");
-                
-                for(String lights : lightStatus) {
-                    if (lights.contains("off"))
-                        setLight(false);
-                }
             } else {
                 //System.out.println(lineOfDesc);
                 desc += lineOfDesc + "\n";
@@ -128,6 +127,7 @@ public class Room {
     void storeState(PrintWriter w) throws IOException {
         w.println(title + ":");
         w.println("beenHere=" + beenHere);
+        w.println("light=" + this.getLight());
         if (contents.size() > 0) {
             w.print(CONTENTS_STARTER);
             for (int i=0; i<contents.size()-1; i++) {
@@ -154,6 +154,9 @@ public class Room {
         }
         beenHere = Boolean.valueOf(line.substring(line.indexOf("=")+1));
 
+        line = s.nextLine();
+        
+        this.setLight(Boolean.valueOf(line.substring(line.indexOf("=")+1)));
         line = s.nextLine();
         if (line.startsWith(CONTENTS_STARTER)) {
             String itemsList = line.substring(CONTENTS_STARTER.length());
@@ -194,7 +197,7 @@ public class Room {
             }
         }
     }
-    	
+        
 
     // =========================================================================
     // Exit Methods

@@ -81,14 +81,14 @@ use[Disappear,Heal(20)]:Used the Potion.
 ===
 Rooms:
 Rotunda
-Light: on
+Light:on
 Lock:false
 Contents: AncientSword,Bomb,Torch,TestKey,Potion
 You are in a beautiful round entry chamber, with tall white pillars that
 seemingly reach to the skies. There is an elevator here.
 ---
 Basement hallway
-Light: on
+Light:off
 Lock:false
 Contents: DrPepper,Potion
 A long, white hallway stretches to the east and west. It is cold here, and you
@@ -96,25 +96,25 @@ can detect the faint buzz of computer fans. A vending machine hums softly in the
 corner.
 ---
 Stephen's office
-Light: on
+Light:off
 Lock:true
 Contents: StarWarsToy,WawaTravelMug,donut
 This is a cluttered office, with many geeky toys sprawling on a desk.
 ---
 Room B6
-Light: on
+Light:on
 Lock:false
 Sunlight streams through tall windows and illuminates a brilliant classroom.
 ---
 Room B13
-Light: on
+Light:on
 Lock:false
 Contents: Bomb
 Rows of state-of-the-art computers line the room, with happy young people typing
 merrily away at several of them. They look up and wave hello to you.
 ---
 Rotunda balcony
-Light: on
+Light:on
 Lock:false
 Contents: chainsaw,magicWand
 You stand on a circular white balcony overlooking an entry hall.
