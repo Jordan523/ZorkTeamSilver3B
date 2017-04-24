@@ -25,6 +25,7 @@ public class CommandFactory {
     public Command parse(String command) {
         String parts[] = command.split(" ");
         String verb = parts[0];
+        
         String noun = parts.length >= 2 ? parts[1] : "";
         if (verb.equalsIgnoreCase("save")) {
             return new SaveCommand(noun);
@@ -41,6 +42,8 @@ public class CommandFactory {
         if(verb.equalsIgnoreCase("get")){
             return new GetCommand(noun);
         }
+        if(verb.equalsIgnoreCase("speak"))
+        	return new SpeakCommand(noun);
         //if(verb.equalsIgnoreCase("use"))
             //return new UseCommand(noun);
         if(verb.equalsIgnoreCase("attack")){
