@@ -1,6 +1,7 @@
 package Dungeon;
 import Entities.Enemy;
 import Entities.Enemy.NoEnemyException;
+import Entities.NPC;
 import Items.*;
 import Game.*;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class Room {
     private ArrayList<Exit> exits;
     private Hashtable<String, Enemy> enemies;
     public ArrayList<String> enemiesDefeated;
+    private ArrayList<NPC> npcs;
 
     Room(String title) {
         init();
@@ -113,6 +115,7 @@ public class Room {
         exits = new ArrayList<Exit>();
         enemies = new Hashtable<String, Enemy>();
         enemiesDefeated = new ArrayList<String>();
+        npcs = new ArrayList<NPC>();
         beenHere = false;
         isLightOn = true;
     }
@@ -222,6 +225,9 @@ public class Room {
             for (Exit exit : exits) {
                 description += "\n" + exit.describe();
             }
+            for(NPC npc : npcs){
+            	description += "\n" + npc.getIdleMessage();
+            }
         }
         
         
@@ -247,6 +253,10 @@ public class Room {
         
         for (Exit exit : exits) {
                 description += "\n" + exit.describe();
+        }
+        
+        for (NPC npc : npcs){
+        	description += "\n" + npc.getIdleMessage();
         }
         
         beenHere = true;
@@ -369,5 +379,9 @@ public class Room {
     
     public void addDefeatedEnemy(Enemy e){
         this.enemiesDefeated.add(e.getName());
+    }
+    
+    public void addNPC(NPC x){
+    	this.npcs.add(x);
     }
 }
