@@ -87,7 +87,7 @@ Rooms:
 Rotunda
 Light:on
 Lock:false
-Contents: AncientSword,Bomb,Torch,TestKey,Potion
+Contents: AncientSword,Bomb,Torch,TestKey,FilledMug
 You are in a beautiful round entry chamber, with tall white pillars that
 seemingly reach to the skies. There is an elevator here.
 ---
@@ -191,5 +191,7 @@ You know what would be nice?.....what? A monster free Computer Science Departmen
 -
 Don’t you have something better to do, like get my coffee?
 -
+Events:
+Win:FilledMug
 ---
 ===
