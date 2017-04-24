@@ -140,8 +140,6 @@ public class GameState {
         System.out.println(this.player.getAdventurersCurrentRoom().getTitle());
     }
 
-
-    
     public Item getItemInVicinityNamed(String name) throws Item.NoItemException {
 
         // First, check inventory.
@@ -160,14 +158,10 @@ public class GameState {
 
         throw new Item.NoItemException();
     }
-
-
-   
-
+    
     public Dungeon getDungeon() {
         return dungeon;
     }
-     
     
     public void setLight(boolean x){
     	this.isLightOut = x;
