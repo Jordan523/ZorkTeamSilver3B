@@ -16,6 +16,10 @@ public abstract class Entity {
 		this.name = name;
 	}
 	
+	public Entity(String name){
+		this.name = name;
+	}
+	
 	public Entity(Scanner s, Dungeon d){
 		
 	}
