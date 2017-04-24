@@ -7,6 +7,7 @@ import java.util.Random;
 import Game.GameState;
 import Items.Item;
 import Items.Item.NoItemException;
+import Timers.DayTimer;
 
 /**
  * 
@@ -23,6 +24,7 @@ public class Player extends Entity{
         private Room adventurersCurrentRoom;
         private final int inventoryLimit = 100;
         private int carryingWeight = 0;
+        private DayTimer time = new DayTimer(14, 0);
 	
 	/**
 	 * 
@@ -40,6 +42,7 @@ public class Player extends Entity{
 	 */
 	public void init(){
 		inventory = new ArrayList<Item>();
+		time.start();
 	}
 	
 	/**
@@ -352,6 +355,14 @@ public class Player extends Entity{
             }
         }
         throw new Item.NoItemException();
+    }
+    
+    public void setTime(int min, int sec){
+    	this.time.setTime(min, sec);
+    }
+    
+    public String getTime(){
+    	return this.time.getTime();
     }
     /**
      * 
