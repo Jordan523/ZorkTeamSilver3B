@@ -62,7 +62,7 @@ public class Item {
             if(verbParts[0].contains("[")){
                 // Get only the stuff between the brackets, and split it by comma
                 String[] firstSplit = verbParts[0].substring(verbParts[0].indexOf("[")+1,verbParts[0].indexOf("]")).split(",");
-                ArrayList<Events> forVerb = new ArrayList<Events>();
+                //ArrayList<Events> forVerb = new ArrayList<Events>();
                 verb = verbParts[0].substring(0, verbParts[0].indexOf("["));
                 
                 for (String evLine : firstSplit) {

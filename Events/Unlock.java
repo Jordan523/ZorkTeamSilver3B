@@ -27,14 +27,22 @@ public class Unlock implements Events {
     @Override
     public void execute() {
         this.room = gs.getDungeon().getRoom(type);
-        if (room != null && room.isAdjacentTo(gs.getPlayer().getAdventurersCurrentRoom())) {
+        
+        System.out.println(gs.getPlayer().getAdventurersCurrentRoom().getTitle());
+        if (room != null && gs.getPlayer().getAdventurersCurrentRoom().isAdjacentTo(room)) {
             room.setBlockage(false);
+            System.out.println("CLICK! -- the door to "
+                    +room.getTitle()+" is now open, but the key is now stuck.");
             
             if (key != null) {
                 DisappearEvent d = new DisappearEvent(key);
                 
                 d.execute();
             }
+        } else if (room != null) {
+            System.out.println("The key doesn't appear to fit any doors here.");
+        } else {
+            System.out.println("You aren't quite sure what to use it on.");
         }
     }
     

@@ -68,10 +68,12 @@ public class Exit {
     String getDir() { return dir; }
     Room getSrc() { return src; }
     Room getDest() {
-        if (dest.isBlocked()|| dest.getCovered()) {
-            if(dest.isBlocked()){System.out.println("You try to force your way past with no avail.");}
-            else{System.out.println("The exit is covered by debris from the earthquake, the only way"
-                    + "\n through is to dig.");}
+        if (dest.isBlocked()) {
+            System.out.println("You try to force your way past with no avail.");
+            return null;
+        } else if (dest.getCovered()) {
+            System.out.println("The exit is covered by debris from the earthquake, the only way"
+                + "\n through is to dig.");
             return null;
         } else if (!dest.getLight()) {
             // add check for if player can illuminate the room anyways?
@@ -80,5 +82,8 @@ public class Exit {
         } else {
             return dest;
         }
+    }
+    Room peekAtDest() {
+        return this.dest;
     }
 }

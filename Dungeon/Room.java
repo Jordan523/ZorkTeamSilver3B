@@ -136,20 +136,18 @@ public class Room {
             w.println(contents.get(contents.size()-1).getPrimaryName());
         }
         try{
-        	if(!enemiesDefeated.isEmpty()){
-        		w.print("Enemies Defeated:");
-        		for(String e : enemiesDefeated)
-        			w.print(e + ",");
-        		w.println();
-        	}
+            if(!enemiesDefeated.isEmpty()){
+                w.print("Enemies Defeated:");
+                for(String e : enemiesDefeated)
+                    w.print(e + ",");
+                w.println();
+            }
         }
         catch(Exception e){w.println();}
         w.println(Dungeon.SECOND_LEVEL_DELIM);
     }
 
-    void restoreState(Scanner s, Dungeon d) throws 
-        GameState.IllegalSaveFormatException {
-
+    void restoreState(Scanner s, Dungeon d) throws GameState.IllegalSaveFormatException {
         String line = s.nextLine();
         if (!line.startsWith("beenHere")) {
             throw new GameState.IllegalSaveFormatException("No beenHere.");
@@ -171,32 +169,31 @@ public class Room {
             //s.nextLine();  // Consume "---".
         }
         if(!line.equals("---")){
-	        String next = s.nextLine();
-	        System.out.println(next);
-	        if(!next.equalsIgnoreCase("---")){
-		        try{
-		        	String[] sep = next.split(":");
-		        	if(sep[0].equalsIgnoreCase("Enemies Defeated")){
-		        		//next = s.nextLine();
-		        		sep = sep[1].split(",");
-		        		try{
-			        	if(!enemies.isEmpty())
-			        		for(String x : sep){
-			        			this.enemies.get(x).setCurrentRoom(null);
-			        			this.enemies.remove(this.enemies.get(x));
-			        		}
-			        			
-		        		}catch(Exception e){}
-			        	s.nextLine(); //Throw away ---
-			        	}
-			        	
-			        }catch(Exception e){
-			        	
-			        }
-		        }
+            String next = s.nextLine();
+            System.out.println(next);
+            if(!next.equalsIgnoreCase("---")){
+                try{
+                    String[] sep = next.split(":");
+                    if(sep[0].equalsIgnoreCase("Enemies Defeated")){
+                        //next = s.nextLine();
+                        sep = sep[1].split(",");
+                        try{
+                        if(!enemies.isEmpty())
+                            for(String x : sep){
+                                this.enemies.get(x).setCurrentRoom(null);
+                                this.enemies.remove(this.enemies.get(x));
+                            }
+
+                        }catch(Exception e){}
+                        s.nextLine(); //Throw away ---
+                        }
+
+                }catch(Exception e){
+
+                }
+            }
         }
-	        
-        }
+    }
     	
 
     // =========================================================================
@@ -268,7 +265,7 @@ public class Room {
     }
     /**
      * Toggles a blocked boolean to signal whether the room can be visited.
-     * @param exit 
+     * @param b 
      */
     public void setBlockage(boolean b) {
         this.blocked = b;
@@ -282,7 +279,7 @@ public class Room {
     }
     /**
      * This will toggle between being covered and not covered
-     * @param boolean 
+     * @param b 
      */
     public void setCoverage(boolean b){
         this.covered = b;
@@ -302,7 +299,7 @@ public class Room {
     
     public boolean isAdjacentTo(Room room) {
         for (Exit e : exits) {
-            if (e.getDir().equals(room))
+            if (e.peekAtDest().equals(room))
                 return true;
         }
         return false;
