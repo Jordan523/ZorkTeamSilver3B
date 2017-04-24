@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import Entities.Enemy;
 import Entities.Enemy.NoEnemyException;
+import Entities.NPC;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -53,7 +54,7 @@ public class Dungeon {
     public static String EXITS_MARKER = "Exits:";
     public static String ITEMS_MARKER = "Items:";
     public static String ENEMIES_MARKER = "Enemies:";
-    public static String WEAPONS_MARKER = "Weapons:";
+    public static String NPCS_MARKER = "NPCS:";
     
     // Variables relating to game state (.sav) storage.
     public static String FILENAME_LEADER = "Dungeon file: ";
@@ -65,6 +66,7 @@ public class Dungeon {
     private Hashtable<String,Room> rooms;
     private Hashtable<String,Item> items;
     private ArrayList<Enemy> enemies;
+    private ArrayList<NPC> npcs;
     private String filename;
 
     Dungeon(String name, Room entry) {
@@ -203,6 +205,21 @@ public class Dungeon {
 	        	
 	        }
         }
+        
+        	
+        	if(!s.nextLine().equalsIgnoreCase(NPCS_MARKER))
+        		throw new IllegalDungeonFormatException("NPCS not found");
+        	
+        	String next = s.nextLine();
+        	System.out.println(next);
+        	try{
+        	while(!next.equalsIgnoreCase("===")){
+        		
+        		this.npcs.add(new NPC(next, s, this));
+        	}
+        }catch(NoEnemyException e){
+        	
+        }
         s.close();
     }
     
@@ -212,6 +229,7 @@ public class Dungeon {
         rooms = new Hashtable<String,Room>();
         items = new Hashtable<String,Item>();
         enemies = new ArrayList<Enemy>();
+        npcs = new ArrayList<NPC>();
     }
 
     
@@ -320,6 +338,10 @@ public class Dungeon {
     	
     	return Rooms;
     	
+    }
+    
+    public ArrayList<NPC> getNPCs(){
+    	return this.npcs;
     }
     
 }
