@@ -43,7 +43,9 @@ public class CommandFactory {
             return new GetCommand(noun);
         }
         if(verb.equalsIgnoreCase("speak"))
-        	return new SpeakCommand(noun);
+        	return new SpeakCommand(parts);
+        if(verb.equalsIgnoreCase("give"))
+        	return new GiveCommand(parts);
         //if(verb.equalsIgnoreCase("use"))
             //return new UseCommand(noun);
         if(verb.equalsIgnoreCase("attack")){
