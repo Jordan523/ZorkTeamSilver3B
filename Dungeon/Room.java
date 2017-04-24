@@ -19,7 +19,7 @@ public class Room {
     class NoRoomException extends Exception {}
 
     static String CONTENTS_STARTER = "Contents: ";
-    static String LIGHT_STATUS = "Light: ";
+    static String LIGHT_STATUS = "Light:";
     static String LOCK_STATUS = "Lock:";
     
     private String title;
@@ -65,13 +65,6 @@ public class Room {
         }
         
         String lineOfDesc = s.nextLine();
-        String[] lightStatus = lineOfDesc.split(":");
-                
-        for(String lights : lightStatus) {
-            if (lights.contains("off"))
-                setLight(false);
-                }
-        //System.out.println(lineOfDesc);
         while (!lineOfDesc.equals(Dungeon.SECOND_LEVEL_DELIM) &&
                !lineOfDesc.equals(Dungeon.TOP_LEVEL_DELIM)) {
             
@@ -89,6 +82,10 @@ public class Room {
                             "No such item '" + itemName + "'");
                     }
                 }
+            } else if (lineOfDesc.startsWith(LIGHT_STATUS)) {
+                String[] lSplit = lineOfDesc.split(":");
+                
+                this.isLightOn = (lSplit.length>1 && lSplit[1].contains("on"));
             } else if (lineOfDesc.startsWith(LOCK_STATUS)) {
                 String[] lSplit = lineOfDesc.split(":");
                 
