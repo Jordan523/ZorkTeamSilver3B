@@ -34,11 +34,9 @@ public class NPC extends Entity{
 		
 			
 			String next = s.nextLine();
-			System.out.println(next);
 			if(next.equalsIgnoreCase("==="))
 				throw new NoEnemyException();
 			String[] roomAndRoomName = next.split(":");
-			System.out.println(roomAndRoomName[1]);
 			this.currentRoom = d.getRoom(roomAndRoomName[1]);
 			currentRoom.addNPC(this);
 			next = s.nextLine();
@@ -59,12 +57,9 @@ public class NPC extends Entity{
 					while(true){
 						if(message.equals("---"))
 							break;
-						System.out.println(message);
 						while(!message.contains("-")){
 							message += s.nextLine();
-							System.out.println(message);
 						}
-						System.out.println(message.replace("-", ""));
 						this.messages.add(message.replace("-", ""));
 						message = s.nextLine();
 						if(message.equalsIgnoreCase("Events:")){
