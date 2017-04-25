@@ -30,6 +30,8 @@ public class CommandFactory {
         if (verb.equalsIgnoreCase("save")) {
             return new SaveCommand(noun);
         }
+        if (verb.equalsIgnoreCase("help"))
+        	return new HelpCommand();
         if (verb.equalsIgnoreCase("take") || verb.equalsIgnoreCase("grab")) {
             return new TakeCommand(noun);
         }
