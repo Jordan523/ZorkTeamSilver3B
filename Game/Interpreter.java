@@ -26,6 +26,7 @@ public class Interpreter {
         "You are currently playing as another UMW CS student.",
         "As this other CS student, you must navigate the rooms of Trinkle Hall.",
         "Your goal? Learn the ultimate meaning of being a student.",
+        "Helpful commands for getting started: 'help', 'describe', and of \ncourse, 'eat'",
         "Enjoy!"
     };
 
@@ -47,11 +48,11 @@ public class Interpreter {
             state.initPlayer(playerName);
             
             if (filename.endsWith(".zork")) {
-                state.initialize(new Dungeon(filename));
                 for (String line : INTRO) {
                     System.out.print(line+"\n  [Press enter to continue...]");
                     commandLine.nextLine();
                 }
+                state.initialize(new Dungeon(filename));
                 System.out.println("\nWelcome to " + 
                     state.getDungeon().getName() + "!");
             } else if (filename.endsWith(".sav")) {
@@ -73,7 +74,7 @@ public class Interpreter {
             while (running) {
                 Random rand = new Random();
                 int x = rand.nextInt(100);
-               if(count == 5){
+                if(count == 5){
                    if(GameState.instance().getEarthquake()==false){
                    int q = rand.nextInt(10);
                    if(q==1){
