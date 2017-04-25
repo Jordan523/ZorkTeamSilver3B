@@ -63,6 +63,11 @@ FilledMug
 15
 examine:You can feel the warm coffee through the thin plastic.
 ---
+CoffeeMaker
+4000
+examine:A basic coffee machine with matching pot..... doesn't look very clean.
+use[Use(WawaTravelMug-FilledMug)]: 
+---
 donut
 7
 eat[Disappear,Wound(-2)]:You feel mildly guilt-ridden.
@@ -87,7 +92,7 @@ Rooms:
 Rotunda
 Light:on
 Lock:false
-Contents: AncientSword,Bomb,Torch,TestKey,FilledMug
+Contents: AncientSword,Torch,TestKey
 You are in a beautiful round entry chamber, with tall white pillars that
 seemingly reach to the skies. There is an elevator here.
 ---
@@ -102,7 +107,7 @@ corner.
 Stephen's office
 Light:off
 Lock:true
-Contents: StarWarsToy,WawaTravelMug,donut
+Contents: donut,StarWarsToy
 This is a cluttered office, with many geeky toys sprawling on a desk.
 ---
 Room B6
@@ -113,14 +118,14 @@ Sunlight streams through tall windows and illuminates a brilliant classroom.
 Room B13
 Light:on
 Lock:false
-Contents: Bomb
+Contents: Bomb,CoffeeMaker
 Rows of state-of-the-art computers line the room, with happy young people typing
 merrily away at several of them. They look up and wave hello to you.
 ---
 Rotunda balcony
 Light:on
 Lock:false
-Contents: chainsaw,magicWand
+Contents: chainsaw,magicWand,WawaTravelMug
 You stand on a circular white balcony overlooking an entry hall.
 Columnar bannisters in ancient Grecian style stand between you and the
 precipice.
