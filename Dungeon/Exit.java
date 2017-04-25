@@ -70,10 +70,10 @@ public class Exit {
     String getDir() { return dir; }
     Room getSrc() { return src; }
     Room getDest() {
-        if (dest.isBlocked()) {
+        if (dest.isBlocked() || src.isBlocked()) {
             System.out.println("You try to force your way past with no avail.");
             return null;
-        } else if (dest.getCovered()) {
+        } else if (dest.getCovered() || src.getCovered()) {
             System.out.println("The exit is covered by debris from the earthquake, the only way"
                 + "\n through is to dig.");
             return null;
