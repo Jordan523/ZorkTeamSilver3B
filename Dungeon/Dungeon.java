@@ -188,7 +188,6 @@ public class Dungeon {
 	        	
 	        	while(true){
 	        		String next = s.nextLine();
-	        		System.out.println(next);
 	        		if(next.equals("---")){
 	        			next = s.nextLine();
 	                                if(next.equals("==="))
@@ -211,7 +210,6 @@ public class Dungeon {
         		throw new IllegalDungeonFormatException("NPCS not found");
         	
         	String next = s.nextLine();
-        	System.out.println(next);
         	try{
         	while(!next.equalsIgnoreCase("===")){
         		
@@ -282,7 +280,6 @@ public class Dungeon {
 
         String roomName = s.nextLine();
         while (!roomName.equals(TOP_LEVEL_DELIM)) {
-            System.out.println(roomName+"*");
             getRoom(roomName.substring(0,roomName.length()-1)).
                 restoreState(s, this);
             roomName = s.nextLine();
