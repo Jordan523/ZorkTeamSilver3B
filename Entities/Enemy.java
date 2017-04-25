@@ -39,7 +39,6 @@ public class Enemy extends Entity{
                 
 		String[] nameAndHealth = nh.split(":");
                 this.name = nameAndHealth[0];
-                System.out.println(nameAndHealth[1]);
                 this.health = Integer.valueOf(nameAndHealth[1]);
 		if(!s.hasNextLine())
 			throw new NoEnemyException();
