@@ -29,8 +29,8 @@ public class GiveCommand extends Command{
 		
 		try{
 			NPC npc = GameState.instance().getDungeon().getNPC(npcName);
-			Item theItem = GameState.instance().getDungeon().getItem(item);
 			Player player = GameState.instance().getPlayer();
+			Item theItem = player.getItemFromInventoryNamed(item);
 			
 			npc.giveItem(theItem);
 			player.removeFromInventory(theItem);
