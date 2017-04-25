@@ -21,6 +21,17 @@ public class Interpreter {
     public static String USAGE_MSG = 
         "Usage: Interpreter borkFile.bork|saveFile.sav.";
 
+    public static String[] INTRO = {
+        "Welcome to Trinkle: Silver Edition!",
+        "You are a student at UMW.",
+        "You are currently playing as another UMW CS student.",
+        "As this other CS student, you must navigate the rooms of Trinkle Hall.",
+        "Your goal? Learn the ultimate meaning of being a student.",
+        "Helpful commands for getting started: 'help', 'describe', and of \ncourse, 'eat'",
+        "Enjoy!"
+    };
+
+
     public static void main(String args[]) {
 
         String command;
@@ -42,6 +53,13 @@ public class Interpreter {
             state.initPlayer(playerName);
             
             if (filename.endsWith(".zork")) {
+<<<<<<< HEAD
+=======
+                for (String line : INTRO) {
+                    System.out.print(line+"\n  [Press enter to continue...]");
+                    commandLine.nextLine();
+                }
+>>>>>>> 8c6115c88dae33fecabdd38628e8975e68816961
                 state.initialize(new Dungeon(filename));
                 System.out.println("\nWelcome to " + 
                     state.getDungeon().getName() + "!");
@@ -64,7 +82,7 @@ public class Interpreter {
             while (running) {
                 Random rand = new Random();
                 int x = rand.nextInt(100);
-               if(count == 5){
+                if(count == 5){
                    if(GameState.instance().getEarthquake()==false){
                    int q = rand.nextInt(10);
                    if(q==1){

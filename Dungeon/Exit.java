@@ -56,10 +56,12 @@ public class Exit {
     }
 
     String describe() {
-        if (src.isBlocked()||src.getCovered()) {
-            return "There is a blocked doorway on the " + dir + " wall.";
+        if (dest.isBlocked() || src.isBlocked()) {
+            return "There is a heavily locked doorway that leads " + dir;
+        } else if (dest.getCovered() || src.getCovered()) {
+            return "Debris prevents you from going " + dir;
         } else if (!dest.getLight()) {
-            return "You could go " + dir + ", but the passage is too dark to read.";
+            return "A darkened doorway leads " + dir;
         } else {
             return "You can go " + dir + " to " + dest.getTitle() + ".";
         }
