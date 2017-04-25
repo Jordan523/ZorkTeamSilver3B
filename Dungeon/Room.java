@@ -179,7 +179,6 @@ public class Room {
         }
         if(!line.equals("---")){
             String next = s.nextLine();
-            System.out.println(next);
             if(!next.equalsIgnoreCase("---")){
                 try{
                     String[] sep = next.split(":");
