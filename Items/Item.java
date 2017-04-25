@@ -96,7 +96,7 @@ public class Item {
                     else if(evName.equalsIgnoreCase("Win"))
                         this.events.put(new Win(), verb);
                     else if(evName.equalsIgnoreCase("Use"))
-                    	this.events.put(new UseEvent(this), verb);
+                    	this.events.put(new UseEvent(evParam), verb);
                 }
             } else {
                 verb = verbParts[0];
