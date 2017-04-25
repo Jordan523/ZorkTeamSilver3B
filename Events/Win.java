@@ -36,7 +36,7 @@ public class Win implements Events {
     public void execute()
     {
         if(!GameState.instance().getPlayer().getAdventurersCurrentRoom().hasEnemies()){
-           System.out.println("You give the coffee mug to the professor. His eye's brightened and a bright light shone upon him from"
+           System.out.println("You give the coffee mug to the professor. His eye's brighten and a bright light shone upon him from"
            		+ "\nan unkown source. \"Thank you " + GameState.instance().getPlayer().getName() + ", you have saved my life and the "
            		+ "small kingdome of Trinkle.\nI shall give everyone A's for the semester and no finals!\"\nIt is said that the professor's"
            		+ " heart grew three sizes that day.\nWell done adventurer and thanks for playing!");
