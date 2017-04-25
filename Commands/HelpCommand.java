@@ -15,7 +15,9 @@ public class HelpCommand extends Command{
 						   "Pickup items ------------------------ take + item name\n" + 
 						   "Drop items -------------------------- drop + item name\n" + 
 						   "Weild an item as a weapon ------------ equip/hold + item name\n" +
-						   "Good Luck!!!");
+						   "Check time --------------------------- get + time , time\n" +
+						   "Check score -------------------------- get + score, score\n" +
+							"Good Luck!!!");
 		return "";
 	}
 
