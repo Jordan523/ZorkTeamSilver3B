@@ -20,14 +20,6 @@ public class Interpreter {
 
     public static String USAGE_MSG = 
         "Usage: Interpreter borkFile.bork|saveFile.sav.";
-    public static String[] INTRO = {
-        "Welcome to Trinkle: Silver Edition!",
-        "You are a student at UMW.",
-        "You are currently playing as another UMW CS student.",
-        "As this other CS student, you must navigate the rooms of Trinkle Hall.",
-        "Your goal? Learn the ultimate meaning of being a student.",
-        "Enjoy!"
-    };
 
     public static void main(String args[]) {
 
@@ -41,6 +33,9 @@ public class Interpreter {
         System.out.println("What's your name, adventurer?: ");
         String playerName = commandLine.nextLine();
         
+        
+        
+        
         try {
             int count = 0;
             state = GameState.instance();
@@ -48,10 +43,6 @@ public class Interpreter {
             
             if (filename.endsWith(".zork")) {
                 state.initialize(new Dungeon(filename));
-                for (String line : INTRO) {
-                    System.out.print(line+"\n  [Press enter to continue...]");
-                    commandLine.nextLine();
-                }
                 System.out.println("\nWelcome to " + 
                     state.getDungeon().getName() + "!");
             } else if (filename.endsWith(".sav")) {
