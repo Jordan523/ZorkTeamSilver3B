@@ -53,13 +53,12 @@ public class Interpreter {
             state.initPlayer(playerName);
             
             if (filename.endsWith(".zork")) {
-<<<<<<< HEAD
-=======
+
                 for (String line : INTRO) {
                     System.out.print(line+"\n  [Press enter to continue...]");
                     commandLine.nextLine();
                 }
->>>>>>> 8c6115c88dae33fecabdd38628e8975e68816961
+
                 state.initialize(new Dungeon(filename));
                 System.out.println("\nWelcome to " + 
                     state.getDungeon().getName() + "!");
