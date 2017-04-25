@@ -24,7 +24,7 @@ public class Interpreter {
         "Welcome to Trinkle: Silver Edition!",
         "You are a student at UMW.",
         "You are currently playing as another UMW CS student.",
-        "As this other CS student, you must navigate the rooms of trinkle.",
+        "As this other CS student, you must navigate the rooms of Trinkle Hall.",
         "Your goal? Learn the ultimate meaning of being a student.",
         "Enjoy!"
     };
